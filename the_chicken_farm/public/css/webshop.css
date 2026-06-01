@@ -1,0 +1,88 @@
+/**
+ * The Chicken Farm - Webshop Custom Styles
+ * Overrides for Frappe Webshop v16
+ */
+
+/* Webshop page general overrides */
+body[data-path*="shop"] .page-content-wrapper,
+body[data-path*="product"] .page-content-wrapper {
+    background: var(--tcf-charcoal);
+    color: var(--tcf-cream);
+}
+
+/* Item cards in webshop */
+body[data-path*="shop"] .product-card,
+body[data-path*="product"] .product-card {
+    background: var(--tcf-charcoal);
+    border: 1px solid rgba(196,147,69,.08);
+    border-radius: 4px;
+    transition: all .4s;
+}
+body[data-path*="shop"] .product-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(196,147,69,.25);
+    box-shadow: 0 20px 40px rgba(0,0,0,.4);
+}
+body[data-path*="shop"] .product-card-title {
+    font-family: Oswald, Arial, sans-serif;
+    color: var(--tcf-cream) !important;
+}
+body[data-path*="shop"] .product-card-price {
+    font-family: Oswald, Arial, sans-serif;
+    color: var(--tcf-gold) !important;
+}
+
+/* Category filter */
+body[data-path*="shop"] .category-filter,
+body[data-path*="shop"] .item-group-nav {
+    background: var(--tcf-black);
+    border-color: rgba(196,147,69,.15);
+}
+body[data-path*="shop"] .category-filter a,
+body[data-path*="shop"] .item-group-nav a {
+    color: var(--tcf-cream) !important;
+}
+body[data-path*="shop"] .category-filter a:hover,
+body[data-path*="shop"] .item-group-nav a.active {
+    color: var(--tcf-gold) !important;
+}
+
+/* Cart styles */
+.cart-container {
+    background: var(--tcf-charcoal);
+    color: var(--tcf-cream);
+}
+.cart-container table {
+    color: var(--tcf-cream);
+}
+.cart-container th {
+    color: var(--tcf-gold);
+    font-family: Oswald, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: .8rem;
+}
+
+/* Buttons in webshop */
+body[data-path*="shop"] .btn-primary,
+body[data-path*="shop"] button[type="submit"],
+body[data-path*="shop"] .checkout-btn {
+    background: var(--tcf-gold) !important;
+    color: var(--tcf-black) !important;
+    border-color: var(--tcf-gold) !important;
+    font-family: Oswald, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 2px;
+}
+body[data-path*="shop"] .btn-primary:hover {
+    background: transparent !important;
+    color: var(--tcf-gold) !important;
+}
+
+/* Search bar */
+body[data-path*="shop"] .search-bar input {
+    background: var(--tcf-black);
+    border-color: rgba(196,147,69,.2);
+    color: var(--tcf-cream);
+}

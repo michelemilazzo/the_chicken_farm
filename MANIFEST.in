@@ -1,0 +1,13 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+recursive-include the_chicken_farm *.py
+recursive-include the_chicken_farm *.js
+recursive-include the_chicken_farm *.css
+recursive-include the_chicken_farm *.html
+recursive-include the_chicken_farm *.json
+recursive-include the_chicken_farm *.svg
+recursive-include the_chicken_farm *.png
+recursive-include the_chicken_farm *.webp
