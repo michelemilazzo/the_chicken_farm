@@ -375,3 +375,11 @@ nav.navbar,
 body > nav:not(#tcf-nav),
 .page-breadcrumbs,
 .page-footer { display: none !important; }
+
+/* ── Hide remaining Frappe mobile/hamburger elements ── */
+.navbar-toggler,
+button.navbar-toggler,
+[data-toggle="collapse"],
+nav.links { display: none !important; }
+
+#tcf-burger { display: none !important; }
