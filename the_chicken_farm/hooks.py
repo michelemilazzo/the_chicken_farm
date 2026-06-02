@@ -7,6 +7,9 @@ app_license = "mit"
 
 required_apps = ["frappe", "erpnext", "webshop"]
 
+web_include_css = ["/assets/the_chicken_farm/css/tcf_theme.css"]
+web_include_js = ["/assets/the_chicken_farm/js/tcf_main.js"]
+
 doc_events = {}
 
 doctype_js = {}
