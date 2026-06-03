@@ -374,7 +374,7 @@ nav.links,
 nav.navbar,
 .navbar-light,
 .web-header,
-body > nav:not(#tcf-nav),
+body > nav:not(#tcf-nav):not(#tcf-global-nav),
 .page-breadcrumbs,
 .page-footer { display: none !important; }
 
@@ -435,3 +435,57 @@ nav.links { display: none !important; }
 .info-box .ib-row .val { color:var(--tcf-brown); font-weight:700; font-size:1.05rem; line-height:1.5; }
 
 @media(max-width:800px){ .tcf-form .r2 { grid-template-columns:1fr; } .sec .inner[style*="grid"]{ grid-template-columns:1fr !important; gap:40px !important; } }
+
+/* === Hamburger menu per la nav locale #tcf-nav (mobile responsive) === */
+#tcf-nav-burger {
+  display: none;
+  background: transparent; border: 0; cursor: pointer;
+  width: 36px; height: 36px; padding: 0;
+  margin-left: auto;
+}
+#tcf-nav-burger span {
+  display: block; height: 3px;
+  background: var(--tcf-cream);
+  border-radius: 2px;
+  margin: 6px 0;
+  transition: transform .25s, opacity .2s;
+}
+#tcf-nav-burger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+#tcf-nav-burger.open span:nth-child(2) { opacity: 0; }
+#tcf-nav-burger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+@media (max-width: 880px) {
+  #tcf-nav { padding: 0 18px; gap: 12px; }
+  #tcf-nav .nav-logo { flex-shrink: 0; }
+  #tcf-nav .nav-logo img { height: 38px; }
+  #tcf-nav .nav-links {
+    display: none !important;
+    position: absolute;
+    top: 68px; left: 0; right: 0;
+    background: var(--tcf-brown);
+    flex-direction: column;
+    padding: 22px 24px 30px;
+    gap: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    border-top: 1px solid rgba(255,245,224,.1);
+  }
+  #tcf-nav.open .nav-links { display: flex !important; }
+  #tcf-nav .nav-links a { font-size: 1rem; padding: 6px 0; }
+  #tcf-nav .nav-account { display: none !important; }
+  #tcf-nav .nav-cta { padding: 8px 16px; font-size: .85rem; }
+  #tcf-nav-burger { display: block; }
+}
+
+@media (max-width: 600px) {
+  #tcf-nav .nav-cta { padding: 7px 12px; font-size: .78rem; }
+  #tcf-hero h1 { font-size: 2.4rem !important; }
+  .split { grid-template-columns: 1fr !important; }
+  .split .txt { padding: 36px 22px !important; }
+  .gstrip { grid-template-columns: 1fr !important; height: auto !important; }
+  .gstrip .ph { height: 220px; }
+  .pillars { grid-template-columns: 1fr 1fr !important; }
+  .menu-cats-grid, .shop-cats { grid-template-columns: 1fr 1fr !important; }
+  .menu-grid { grid-template-columns: 1fr !important; }
+  .sec .inner[style*="grid"] { grid-template-columns: 1fr !important; gap: 30px !important; }
+  .orange-band h2 { font-size: 1.8rem !important; }
+}
