@@ -1,0 +1,102 @@
+{
+ "autoname": "OIL-.YYYY.-.###",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "location",
+  "date",
+  "service_type",
+  "fryer_number",
+  "oil_quality_percent",
+  "status",
+  "notes",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Restaurant Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Select",
+   "label": "Service",
+   "options": "Lunch\nDinner",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fryer_number",
+   "fieldtype": "Int",
+   "label": "Fryer Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "oil_quality_percent",
+   "fieldtype": "Percent",
+   "label": "Oil Quality %"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "OK\nWarning\nCritical",
+   "default": "OK"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "Oil Quality Register",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Oil Quality Register",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "write": 1,
+   "role": "System Manager"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "role": "TCF Kitchen Manager"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "role": "TCF Operator Kitchen"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

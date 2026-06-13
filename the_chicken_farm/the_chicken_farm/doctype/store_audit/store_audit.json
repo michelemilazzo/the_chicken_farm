@@ -1,0 +1,156 @@
+{
+ "autoname": "AUDIT-.####",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "location",
+  "audit_date",
+  "auditor",
+  "section_break_scores",
+  "service_sala_score",
+  "service_cucina_score",
+  "cleaning_score",
+  "haccp_score",
+  "speed_score",
+  "training_score",
+  "maintenance_score",
+  "problem_solving_score",
+  "communication_score",
+  "section_break_result",
+  "total_score",
+  "non_conformities",
+  "action_plan",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Restaurant Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "audit_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Audit Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "auditor",
+   "fieldtype": "Link",
+   "label": "Auditor",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_scores",
+   "fieldtype": "Section Break",
+   "label": "Scores (1-10)"
+  },
+  {
+   "fieldname": "service_sala_score",
+   "fieldtype": "Int",
+   "label": "Sala Service"
+  },
+  {
+   "fieldname": "service_cucina_score",
+   "fieldtype": "Int",
+   "label": "Kitchen Service"
+  },
+  {
+   "fieldname": "cleaning_score",
+   "fieldtype": "Int",
+   "label": "Cleaning"
+  },
+  {
+   "fieldname": "haccp_score",
+   "fieldtype": "Int",
+   "label": "HACCP"
+  },
+  {
+   "fieldname": "speed_score",
+   "fieldtype": "Int",
+   "label": "Speed"
+  },
+  {
+   "fieldname": "training_score",
+   "fieldtype": "Int",
+   "label": "Training"
+  },
+  {
+   "fieldname": "maintenance_score",
+   "fieldtype": "Int",
+   "label": "Maintenance"
+  },
+  {
+   "fieldname": "problem_solving_score",
+   "fieldtype": "Int",
+   "label": "Problem Solving"
+  },
+  {
+   "fieldname": "communication_score",
+   "fieldtype": "Int",
+   "label": "Communication"
+  },
+  {
+   "fieldname": "section_break_result",
+   "fieldtype": "Section Break",
+   "label": "Result"
+  },
+  {
+   "fieldname": "total_score",
+   "fieldtype": "Float",
+   "label": "Total Score",
+   "read_only": 1
+  },
+  {
+   "fieldname": "non_conformities",
+   "fieldtype": "Small Text",
+   "label": "Non Conformities"
+  },
+  {
+   "fieldname": "action_plan",
+   "fieldtype": "Text Editor",
+   "label": "Action Plan"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "Store Audit",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Store Audit",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "write": 1,
+   "role": "System Manager"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "role": "TCF Restaurant Manager"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

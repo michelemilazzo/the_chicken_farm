@@ -366,20 +366,3 @@ body[data-path="home"] .page-breadcrumbs,
   .btns .btn { text-align: center; }
   .split .txt { padding: 32px 20px; }
 }
-
-/* ── Hide conflicting navbars ── */
-nav.links,
-nav.navbar,
-.navbar-light,
-.web-header,
-body > nav:not(#tcf-nav),
-.page-breadcrumbs,
-.page-footer { display: none !important; }
-
-/* ── Hide remaining Frappe mobile/hamburger elements ── */
-.navbar-toggler,
-button.navbar-toggler,
-[data-toggle="collapse"],
-nav.links { display: none !important; }
-
-#tcf-burger { display: none !important; }

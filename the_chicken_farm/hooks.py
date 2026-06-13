@@ -7,14 +7,10 @@ app_license = "mit"
 
 required_apps = ["frappe", "erpnext", "webshop"]
 
-web_include_css = ["/assets/the_chicken_farm/css/tcf_theme.css"]
-web_include_js = ["/assets/the_chicken_farm/js/tcf_main.js"]
-
-doc_events = {}
-
-doctype_js = {}
-
-scheduler_events = {}
+web_include_css = "/assets/the_chicken_farm/css/tcf_theme.css?v=202606031143"
+web_include_js = "/assets/the_chicken_farm/js/tcf_main.js?v=202606031143"
+app_include_css = "/assets/the_chicken_farm/css/tcf_theme.css?v=202606031143"
+app_include_js = "/assets/the_chicken_farm/js/tcf_main.js?v=202606031143"
 
 website_redirects = [
     {"source": "/franchising", "target": "/franchise"},
@@ -22,4 +18,9 @@ website_redirects = [
     {"source": "/contatti", "target": "/contact"},
 ]
 
-fixtures = []
+doc_events = {}
+scheduler_events = {}
+
+fixtures = [
+    {"doctype": "Role", "filters": [["name", "like", "TCF %"]]},
+]

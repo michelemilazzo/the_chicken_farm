@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Chicken Farm — Preview BK Style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&family=Oswald:wght@700;900&display=swap" rel="stylesheet">
+<style>
+/* ── PALETTE BK-STYLE ── */
+:root {
+  --bk-red:    #D62300;
+  --bk-yellow: #F5A800;
+  --bk-brown:  #3D1C0B;
+  --bk-cream:  #FFF5E0;
+  --bk-green:  #4C7031;
+  --bk-white:  #FFFFFF;
+  --bk-dark:   #1A0A02;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bk-cream);
+  color: var(--bk-brown);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bk-brown);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 70px;
+}
+.nav-logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem; color: var(--bk-yellow);
+  letter-spacing: 1px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo .rooster { font-size: 1.8rem; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: .9rem;
+  color: var(--bk-cream); text-decoration: none;
+  letter-spacing: 1px; text-transform: uppercase;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--bk-yellow); }
+.nav-cta {
+  background: var(--bk-red); color: white;
+  padding: 10px 24px; border-radius: 50px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem; letter-spacing: .5px;
+  text-decoration: none; transition: all .2s;
+  border: 2px solid var(--bk-red);
+}
+.nav-cta:hover { background: transparent; color: var(--bk-red); border-color: var(--bk-red); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  background: var(--bk-brown);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 70px;
+}
+.hero-bg-circle {
+  position: absolute;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(245,168,0,.15) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-stripe {
+  position: absolute; top: 0; right: 0;
+  width: 45%; height: 100%;
+  background: var(--bk-red);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  opacity: .08;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: 60px 24px;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--bk-yellow); color: var(--bk-brown);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem; padding: 8px 24px;
+  border-radius: 50px; margin-bottom: 32px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 0 rgba(0,0,0,.3);
+}
+.hero-logo-svg {
+  width: 140px; height: 140px;
+  margin: 0 auto 32px;
+  background: var(--bk-yellow);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  border: 4px solid rgba(255,255,255,.15);
+}
+#hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: .95;
+  color: var(--bk-white);
+  margin-bottom: 16px;
+}
+#hero h1 .yellow { color: var(--bk-yellow); }
+#hero h1 .red { color: var(--bk-red); }
+.hero-tagline {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--bk-yellow);
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+}
+.hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+.btn-main {
+  background: var(--bk-yellow); color: var(--bk-brown);
+  padding: 18px 40px; border-radius: 50px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem; text-decoration: none;
+  box-shadow: 0 6px 0 rgba(0,0,0,.35);
+  transition: all .15s; border: none; cursor: pointer;
+  display: inline-block; letter-spacing: .5px;
+}
+.btn-main:hover { transform: translateY(-3px); box-shadow: 0 9px 0 rgba(0,0,0,.35); }
+.btn-main:active { transform: translateY(2px); box-shadow: 0 3px 0 rgba(0,0,0,.35); }
+.btn-sec {
+  background: transparent; color: var(--bk-cream);
+  padding: 16px 40px; border-radius: 50px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem; text-decoration: none;
+  border: 3px solid rgba(255,245,224,.4);
+  transition: all .2s; display: inline-block;
+}
+.btn-sec:hover { border-color: var(--bk-yellow); color: var(--bk-yellow); transform: translateY(-2px); }
+.hero-scroll {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: .8rem;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,245,224,.5);
+  animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+/* ── WAVE DIVIDER ── */
+.wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
+.wave svg { display: block; }
+
+/* ── PILLARS ── */
+.pillars-section {
+  background: var(--bk-yellow);
+  padding: 0 0 60px;
+}
+.pillars-title {
+  text-align: center; padding: 60px 24px 40px;
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--bk-brown);
+}
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1100px; margin: 0 auto;
+  gap: 20px; padding: 0 40px;
+}
+.pillar-card {
+  background: var(--bk-brown);
+  border-radius: 24px;
+  padding: 40px 24px;
+  text-align: center;
+  box-shadow: 0 8px 0 rgba(0,0,0,.2);
+  transition: transform .2s;
+}
+.pillar-card:hover { transform: translateY(-6px); }
+.pillar-card .icon { font-size: 3rem; margin-bottom: 16px; }
+.pillar-card .num {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3.5rem; color: var(--bk-yellow);
+  line-height: 1; margin-bottom: 8px;
+}
+.pillar-card h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem; color: var(--bk-cream);
+  margin-bottom: 10px;
+}
+.pillar-card p { font-size: .85rem; color: rgba(255,245,224,.6); line-height: 1.5; }
+
+/* ── MENU HIGHLIGHT ── */
+.menu-section {
+  background: var(--bk-cream);
+  padding: 80px 40px;
+}
+.section-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem; color: var(--bk-red);
+  letter-spacing: 3px; text-transform: uppercase;
+  text-align: center; margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--bk-brown);
+  text-align: center; line-height: 1;
+  margin-bottom: 12px;
+}
+.section-title .highlight { color: var(--bk-red); }
+.section-sub {
+  text-align: center; color: #6B3A20;
+  font-size: 1.1rem; max-width: 500px;
+  margin: 0 auto 60px; font-weight: 700;
+}
+.menu-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px; max-width: 1100px; margin: 0 auto;
+}
+.menu-card {
+  background: var(--bk-white);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 8px 0 rgba(61,28,11,.15);
+  transition: transform .2s;
+  border: 3px solid transparent;
+}
+.menu-card:hover { transform: translateY(-8px); border-color: var(--bk-yellow); }
+.menu-card-img {
+  height: 200px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 6rem;
+  position: relative; overflow: hidden;
+}
+.menu-card-img.red-bg   { background: linear-gradient(135deg, #D62300, #FF5733); }
+.menu-card-img.brown-bg { background: linear-gradient(135deg, #3D1C0B, #6B3A20); }
+.menu-card-img.yellow-bg{ background: linear-gradient(135deg, #F5A800, #FFD166); }
+.menu-card-tag {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--bk-yellow); color: var(--bk-brown);
+  font-family: 'Fredoka One', cursive;
+  font-size: .85rem; padding: 4px 14px; border-radius: 50px;
+}
+.menu-card-body { padding: 28px 24px; }
+.menu-card-body h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem; color: var(--bk-brown); margin-bottom: 8px;
+}
+.menu-card-body p { font-size: .9rem; color: #6B3A20; font-weight: 700; line-height: 1.5; margin-bottom: 20px; }
+.menu-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.menu-price {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem; color: var(--bk-red);
+}
+.btn-add {
+  background: var(--bk-red); color: white;
+  border: none; border-radius: 50px;
+  padding: 10px 24px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem; cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0,0,0,.2);
+  transition: all .15s;
+}
+.btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,.2); }
+
+/* ── SPLIT — ABOUT ── */
+.about-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+}
+.about-img {
+  background: var(--bk-red);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.about-img-inner {
+  font-size: 14rem; opacity: .15;
+  position: absolute;
+}
+.about-img-content {
+  position: relative; z-index: 2;
+  text-align: center;
+}
+.about-img-content .big-icon { font-size: 8rem; }
+.about-img-content p {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem; color: white;
+  margin-top: 16px;
+}
+.about-txt {
+  background: var(--bk-brown);
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.about-txt .eyebrow {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem; color: var(--bk-yellow);
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;
+}
+.about-txt h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: var(--bk-white); line-height: 1.1; margin-bottom: 24px;
+}
+.about-txt h2 .y { color: var(--bk-yellow); }
+.about-txt p {
+  color: rgba(255,245,224,.7);
+  font-size: 1.05rem; line-height: 1.7; font-weight: 700; margin-bottom: 32px;
+}
+.about-bullets { list-style: none; margin-bottom: 40px; display: flex; flex-direction: column; gap: 12px; }
+.about-bullets li {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--bk-cream); font-weight: 800; font-size: .95rem;
+}
+.about-bullets li::before {
+  content: '✓';
+  background: var(--bk-yellow); color: var(--bk-brown);
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: .9rem; flex-shrink: 0;
+}
+
+/* ── LOCATIONS BAND ── */
+.locations-section {
+  background: var(--bk-red);
+  padding: 80px 40px; text-align: center;
+}
+.locations-section h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--bk-white); margin-bottom: 12px;
+}
+.locations-section .sub {
+  color: rgba(255,255,255,.8); font-size: 1.1rem;
+  font-weight: 700; margin-bottom: 48px;
+}
+.loc-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; max-width: 900px; margin: 0 auto 48px;
+}
+.loc-card {
+  background: rgba(255,255,255,.12);
+  border-radius: 24px; padding: 32px 24px;
+  border: 2px solid rgba(255,255,255,.25);
+  transition: all .2s;
+}
+.loc-card:hover { background: rgba(255,255,255,.2); transform: translateY(-4px); }
+.loc-card .loc-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.loc-card h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem; color: var(--bk-white); margin-bottom: 8px;
+}
+.loc-card p { color: rgba(255,255,255,.75); font-weight: 700; font-size: .9rem; line-height: 1.5; }
+
+/* ── CTA FINAL ── */
+.cta-section {
+  background: var(--bk-yellow);
+  padding: 100px 40px; text-align: center;
+}
+.cta-section h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--bk-brown); line-height: 1;
+  margin-bottom: 16px;
+}
+.cta-section h2 .red { color: var(--bk-red); }
+.cta-section p {
+  font-size: 1.2rem; font-weight: 800;
+  color: rgba(61,28,11,.7); margin-bottom: 40px;
+}
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-dark {
+  background: var(--bk-brown); color: var(--bk-cream);
+  padding: 18px 44px; border-radius: 50px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem; text-decoration: none;
+  box-shadow: 0 6px 0 rgba(0,0,0,.25);
+  transition: all .15s; display: inline-block;
+}
+.btn-dark:hover { transform: translateY(-3px); box-shadow: 0 9px 0 rgba(0,0,0,.25); }
+.btn-red {
+  background: var(--bk-red); color: white;
+  padding: 18px 44px; border-radius: 50px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem; text-decoration: none;
+  box-shadow: 0 6px 0 rgba(0,0,0,.2);
+  transition: all .15s; display: inline-block;
+}
+.btn-red:hover { transform: translateY(-3px); box-shadow: 0 9px 0 rgba(0,0,0,.2); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bk-dark);
+  padding: 48px 40px 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem; color: var(--bk-yellow);
+}
+.footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+.footer-links a {
+  color: rgba(255,245,224,.5); text-decoration: none;
+  font-weight: 800; font-size: .85rem;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--bk-yellow); }
+.footer-copy {
+  color: rgba(255,245,224,.3);
+  font-size: .8rem; font-weight: 700;
+  width: 100%; text-align: center; margin-top: 8px;
+}
+
+/* ── PREVIEW NOTE ── */
+.preview-note {
+  position: fixed; bottom: 20px; right: 20px; z-index: 999;
+  background: var(--bk-brown); color: var(--bk-yellow);
+  font-family: 'Fredoka One', cursive;
+  font-size: .9rem; padding: 12px 20px; border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  border: 2px solid var(--bk-yellow);
+}
+
+/* ── COMING SOON ── */
+.coming-section {
+  background: var(--bk-dark);
+  padding: 100px 40px;
+}
+.coming-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+.coming-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  color: var(--bk-white); line-height: 1; margin-bottom: 16px;
+}
+.coming-title span { color: var(--bk-yellow); }
+.coming-sub {
+  color: rgba(255,245,224,.6); font-size: 1.1rem;
+  font-weight: 700; margin-bottom: 60px;
+}
+.coming-cards {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 24px; margin-bottom: 60px;
+}
+.coming-card {
+  background: rgba(255,255,255,.05);
+  border: 2px solid rgba(245,168,0,.2);
+  border-radius: 28px; padding: 40px 24px 32px;
+  position: relative; transition: all .2s;
+}
+.coming-card:hover { border-color: var(--bk-yellow); transform: translateY(-6px); background: rgba(255,255,255,.08); }
+.coming-card.featured {
+  border-color: var(--bk-yellow);
+  background: rgba(245,168,0,.08);
+  transform: scale(1.04);
+}
+.coming-card.featured:hover { transform: scale(1.04) translateY(-6px); }
+.coming-ribbon {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--bk-brown); color: var(--bk-yellow);
+  font-family: 'Fredoka One', cursive; font-size: .85rem;
+  padding: 6px 20px; border-radius: 50px; white-space: nowrap;
+  border: 2px solid var(--bk-yellow);
+}
+.coming-ribbon.hot { background: var(--bk-red); color: white; border-color: var(--bk-red); }
+.coming-icon { font-size: 3rem; margin: 16px 0 12px; }
+.coming-card h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem; color: var(--bk-white); margin-bottom: 6px;
+}
+.coming-card p { color: rgba(255,245,224,.5); font-weight: 700; font-size: .9rem; margin-bottom: 20px; }
+.coming-countdown {
+  display: flex; justify-content: center; align-items: baseline;
+  gap: 6px; margin-bottom: 24px;
+}
+.cd-num {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem; color: var(--bk-yellow); line-height: 1;
+}
+.cd-lbl {
+  font-size: .7rem; color: rgba(255,245,224,.4);
+  text-transform: uppercase; letter-spacing: 2px;
+  margin-right: 10px; font-weight: 800;
+}
+.btn-notify {
+  display: inline-block;
+  background: transparent; color: var(--bk-cream);
+  border: 2px solid rgba(255,245,224,.25);
+  padding: 10px 24px; border-radius: 50px;
+  font-family: 'Fredoka One', cursive; font-size: .95rem;
+  text-decoration: none; transition: all .2s;
+}
+.btn-notify:hover { border-color: var(--bk-yellow); color: var(--bk-yellow); }
+.coming-newsletter {
+  background: rgba(255,255,255,.05);
+  border: 2px solid rgba(245,168,0,.15);
+  border-radius: 24px; padding: 40px;
+  max-width: 600px; margin: 0 auto;
+}
+.coming-newsletter p {
+  color: rgba(255,245,224,.7); font-weight: 700;
+  font-size: 1rem; margin-bottom: 20px;
+}
+.coming-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.coming-input {
+  flex: 1; min-width: 220px;
+  background: rgba(255,255,255,.08); border: 2px solid rgba(255,245,224,.15);
+  color: var(--bk-cream); padding: 14px 20px; border-radius: 50px;
+  font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700;
+  outline: none; transition: border .2s;
+}
+.coming-input::placeholder { color: rgba(255,245,224,.3); }
+.coming-input:focus { border-color: var(--bk-yellow); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .pillars-grid { grid-template-columns: repeat(2,1fr); }
+  .menu-cards { grid-template-columns: 1fr; max-width: 440px; }
+  .about-section { grid-template-columns: 1fr; }
+  .about-img { min-height: 300px; }
+  .about-txt { padding: 48px 32px; }
+  .loc-cards { grid-template-columns: 1fr; max-width: 360px; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .pillars-grid { grid-template-columns: 1fr; padding: 0 20px; }
+  footer { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="/files/logo_circle.svg" style="height:42px;filter:brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg)">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Menu</a></li>
+    <li><a href="#">Chi Siamo</a></li>
+    <li><a href="#">Ristoranti</a></li>
+    <li><a href="#">Franchise</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Prenota ora</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🔥 Griglia &amp; Spiedo dal 2015</div>
+    <img src="/files/logo_circle.svg" style="width:140px;height:140px;margin:0 auto 32px;display:block;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))">
+    <h1>
+      <span class="yellow">The</span><br>
+      Chicken<br>
+      <span class="red">Farm</span>
+    </h1>
+    <p class="hero-tagline">Griglia &amp; Spiedo — Fatti come si deve</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-main">🍗 Ordina Ora</a>
+      <a href="#" class="btn-sec">Scopri il Menu</a>
+    </div>
+    <span class="hero-scroll">↓ &nbsp; Scorri &nbsp; ↓</span>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,0 C360,80 1080,0 1440,60 L1440,80 L0,80 Z" fill="#F5A800"/>
+  </svg>
+</div>
+
+<!-- PILLARS -->
+<section class="pillars-section">
+  <h2 class="pillars-title">Perché The Chicken Farm?</h2>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="icon">🔥</div>
+      <div class="num">100%</div>
+      <h3>Pollo Fresco</h3>
+      <p>Mai surgelato. Selezionato ogni giorno dai nostri fornitori locali.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="icon">🌿</div>
+      <div class="num">24h</div>
+      <h3>Marinatura</h3>
+      <p>Le nostre ricette segrete marinano per 24 ore. Il sapore si sente.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="icon">🍗</div>
+      <div class="num">+30</div>
+      <h3>Ricette</h3>
+      <p>Oltre 30 specialità tra griglia, spiedo e salse artigianali.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="icon">⚡</div>
+      <div class="num">15'</div>
+      <h3>Servizio Veloce</h3>
+      <p>Dal fuoco al tuo tavolo in 15 minuti. Caldo, sempre.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#F5A800">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,60 C480,0 960,80 1440,20 L1440,80 L0,80 Z" fill="#FFF5E0"/>
+  </svg>
+</div>
+
+<!-- MENU -->
+<section class="menu-section">
+  <p class="section-label">🍽️ I nostri protagonisti</p>
+  <h2 class="section-title">Il <span class="highlight">Menu</span> che fa la differenza</h2>
+  <p class="section-sub">Pollo come non l'hai mai mangiato. Punto.</p>
+  <div class="menu-cards">
+    <div class="menu-card">
+      <div class="menu-card-img red-bg">
+        <span>🍗</span>
+        <span class="menu-card-tag">🔥 Best Seller</span>
+      </div>
+      <div class="menu-card-body">
+        <h3>Pollo allo Spiedo</h3>
+        <p>Intero, croccante fuori, succoso dentro. Con patate arrosto e salsa TCF.</p>
+        <div class="menu-card-footer">
+          <span class="menu-price">€14,90</span>
+          <button class="btn-add">+ Aggiungi</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img brown-bg">
+        <span>🥩</span>
+        <span class="menu-card-tag">⭐ Nuovo</span>
+      </div>
+      <div class="menu-card-body">
+        <h3>Petto alla Griglia</h3>
+        <p>Marinato alle erbe, grigliato al momento. Con insalata fresca di stagione.</p>
+        <div class="menu-card-footer">
+          <span class="menu-price">€11,50</span>
+          <button class="btn-add">+ Aggiungi</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img yellow-bg">
+        <span>🌮</span>
+        <span class="menu-card-tag">🌶️ Piccante</span>
+      </div>
+      <div class="menu-card-body">
+        <h3>Farm Box Spicy</h3>
+        <p>Ali piccanti, patatine crinkle, salsa ranch. La combo perfetta per due.</p>
+        <div class="menu-card-footer">
+          <span class="menu-price">€18,90</span>
+          <button class="btn-add">+ Aggiungi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SPLIT -->
+<section class="about-section">
+  <div class="about-img">
+    <div class="about-img-inner">🐓</div>
+    <div class="about-img-content">
+      <div class="big-icon">🔥</div>
+      <p>Dal 2015<br>con passione</p>
+    </div>
+  </div>
+  <div class="about-txt">
+    <span class="eyebrow">✦ La nostra storia</span>
+    <h2>Nati per <span class="y">cucinare</span><br>bene il pollo</h2>
+    <p>Non siamo un fast food. Siamo un posto dove il cibo si rispetta, la griglia è sempre accesa e ogni piatto viene fatto con la stessa cura del primo giorno.</p>
+    <ul class="about-bullets">
+      <li>Fornitori locali certificati</li>
+      <li>Ricette originali, mai copiate</li>
+      <li>Team formato con passione vera</li>
+      <li>Ingredienti freschi ogni mattina</li>
+    </ul>
+    <a href="#" class="btn-main" style="align-self:flex-start">Scopri la nostra storia →</a>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#3D1C0B">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 C720,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#D62300"/>
+  </svg>
+</div>
+
+<!-- LOCATIONS -->
+<section class="locations-section">
+  <h2>📍 Trovaci qui</h2>
+  <p class="sub">Tre ristoranti, un'unica qualità</p>
+  <div class="loc-cards">
+    <div class="loc-card">
+      <div class="loc-icon">🏙️</div>
+      <h3>Milano Centro</h3>
+      <p>Via Torino 42<br>Lun–Dom 12:00–23:00</p>
+    </div>
+    <div class="loc-card">
+      <div class="loc-icon">🌳</div>
+      <h3>Milano Navigli</h3>
+      <p>Alzaia Naviglio 18<br>Lun–Dom 12:00–01:00</p>
+    </div>
+    <div class="loc-card">
+      <div class="loc-icon">🏘️</div>
+      <h3>Monza</h3>
+      <p>Viale Lombardia 5<br>Mar–Dom 12:00–22:30</p>
+    </div>
+  </div>
+  <a href="#" class="btn-main">Trova il ristorante più vicino</a>
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-section">
+  <div class="coming-inner">
+    <p class="section-label" style="color:var(--bk-yellow)">🗓️ Prossime aperture</p>
+    <h2 class="coming-title">Stiamo <span>arrivando</span><br>da te</h2>
+    <p class="coming-sub">Nuovi ristoranti in arrivo. Sii il primo a saperlo.</p>
+    <div class="coming-cards">
+      <div class="coming-card">
+        <div class="coming-ribbon">Apertura Estate 2025</div>
+        <div class="coming-icon">🏙️</div>
+        <h3>Torino — Centro</h3>
+        <p>Via Roma 88</p>
+        <div class="coming-countdown" data-date="2025-09-01">
+          <span class="cd-num" id="cd1-d">—</span><span class="cd-lbl">giorni</span>
+          <span class="cd-num" id="cd1-h">—</span><span class="cd-lbl">ore</span>
+        </div>
+        <a href="#" class="btn-notify">🔔 Avvisami</a>
+      </div>
+      <div class="coming-card featured">
+        <div class="coming-ribbon hot">Apertura Autunno 2025</div>
+        <div class="coming-icon">🌆</div>
+        <h3>Roma — Prati</h3>
+        <p>Viale Giulio Cesare 12</p>
+        <div class="coming-countdown" data-date="2025-10-15">
+          <span class="cd-num" id="cd2-d">—</span><span class="cd-lbl">giorni</span>
+          <span class="cd-num" id="cd2-h">—</span><span class="cd-lbl">ore</span>
+        </div>
+        <a href="#" class="btn-notify">🔔 Avvisami</a>
+      </div>
+      <div class="coming-card">
+        <div class="coming-ribbon">Apertura 2026</div>
+        <div class="coming-icon">🌊</div>
+        <h3>Napoli — Chiaia</h3>
+        <p>Via Caracciolo 34</p>
+        <div class="coming-countdown" data-date="2026-03-01">
+          <span class="cd-num" id="cd3-d">—</span><span class="cd-lbl">giorni</span>
+          <span class="cd-num" id="cd3-h">—</span><span class="cd-lbl">ore</span>
+        </div>
+        <a href="#" class="btn-notify">🔔 Avvisami</a>
+      </div>
+    </div>
+    <div class="coming-newsletter">
+      <p>Vuoi sapere per primo quando apriamo vicino a te?</p>
+      <div class="coming-form">
+        <input type="email" placeholder="La tua email..." class="coming-input">
+        <button class="btn-main" style="border-radius:50px;font-size:1rem;padding:14px 28px">Iscriviti</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINALE -->
+<section class="cta-section">
+  <h2>Hai fame?<br><span class="red">Lo sapevamo.</span></h2>
+  <p>Prenota un tavolo o ordina direttamente online.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn-dark">🍽️ Prenota Tavolo</a>
+    <a href="#" class="btn-red">🛵 Ordina Online</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="/files/logo_circle.svg" style="height:48px;opacity:.9">
+  <ul class="footer-links">
+    <li><a href="#">Menu</a></li>
+    <li><a href="#">Chi Siamo</a></li>
+    <li><a href="#">Ristoranti</a></li>
+    <li><a href="#">Lavora con Noi</a></li>
+    <li><a href="#">Franchise</a></li>
+    <li><a href="#">Privacy</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 The Chicken Farm — Griglia &amp; Spiedo. Tutti i diritti riservati.</p>
+</footer>
+
+<div class="preview-note">🎨 Preview BK Style</div>
+
+<script>
+function updateCountdown(targetDate, dId, hId) {
+  const diff = new Date(targetDate) - new Date();
+  if (diff <= 0) { document.getElementById(dId).textContent = '0'; document.getElementById(hId).textContent = '0'; return; }
+  document.getElementById(dId).textContent = Math.floor(diff / 86400000);
+  document.getElementById(hId).textContent = Math.floor((diff % 86400000) / 3600000);
+}
+function tick() {
+  updateCountdown('2025-09-01', 'cd1-d', 'cd1-h');
+  updateCountdown('2025-10-15', 'cd2-d', 'cd2-h');
+  updateCountdown('2026-03-01', 'cd3-d', 'cd3-h');
+}
+tick(); setInterval(tick, 60000);
+</script>
+</body>
+</html>

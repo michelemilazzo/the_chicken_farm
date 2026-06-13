@@ -1,0 +1,173 @@
+{
+ "actions": [],
+ "autoname": "KIT-.YYYY.-.###",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "location",
+  "date",
+  "service_type",
+  "column_break_1",
+  "opening_responsible",
+  "closing_responsible",
+  "section_break_preparations",
+  "preparations",
+  "section_break_issues",
+  "machine_issues",
+  "unavailable_items",
+  "section_break_waste",
+  "waste_table",
+  "notes",
+  "signature",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Restaurant Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Select",
+   "label": "Service",
+   "options": "Lunch\nDinner",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "opening_responsible",
+   "fieldtype": "Link",
+   "label": "Opening",
+   "options": "User"
+  },
+  {
+   "fieldname": "closing_responsible",
+   "fieldtype": "Link",
+   "label": "Closing",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_preparations",
+   "fieldtype": "Section Break",
+   "label": "Preparations"
+  },
+  {
+   "fieldname": "preparations",
+   "fieldtype": "Table",
+   "label": "Preparations",
+   "options": "Kitchen Preparation"
+  },
+  {
+   "fieldname": "section_break_issues",
+   "fieldtype": "Section Break",
+   "label": "Issues"
+  },
+  {
+   "fieldname": "machine_issues",
+   "fieldtype": "Small Text",
+   "label": "Machine Issues"
+  },
+  {
+   "fieldname": "unavailable_items",
+   "fieldtype": "Small Text",
+   "label": "Unavailable Items"
+  },
+  {
+   "fieldname": "section_break_waste",
+   "fieldtype": "Section Break",
+   "label": "Waste"
+  },
+  {
+   "fieldname": "waste_table",
+   "fieldtype": "Table",
+   "label": "Waste",
+   "options": "Kitchen Waste Item"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "Kitchen Daily Checklist",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Kitchen Daily Checklist",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "TCF Kitchen Manager",
+   "share": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 1,
+   "export": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "TCF Operator Kitchen",
+   "share": 0,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

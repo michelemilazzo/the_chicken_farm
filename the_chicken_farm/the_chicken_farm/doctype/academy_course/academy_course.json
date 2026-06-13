@@ -1,0 +1,89 @@
+{
+ "autoname": "field:course_title",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "course_title",
+  "active",
+  "section_break_details",
+  "role_target",
+  "level",
+  "lessons",
+  "quiz_required",
+  "certification_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "course_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Course Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active",
+   "default": "1"
+  },
+  {
+   "fieldname": "section_break_details",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "role_target",
+   "fieldtype": "Select",
+   "label": "Target Role",
+   "options": "Kitchen\nSala\nManager\nFranchisee\nAll"
+  },
+  {
+   "fieldname": "level",
+   "fieldtype": "Select",
+   "label": "Level",
+   "options": "Basic\nIntermediate\nAdvanced"
+  },
+  {
+   "fieldname": "lessons",
+   "fieldtype": "Int",
+   "label": "Number of Lessons"
+  },
+  {
+   "fieldname": "quiz_required",
+   "fieldtype": "Check",
+   "label": "Quiz Required"
+  },
+  {
+   "fieldname": "certification_name",
+   "fieldtype": "Data",
+   "label": "Certification Name"
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Academy Course",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "write": 1,
+   "role": "System Manager"
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "read": 1,
+   "write": 1,
+   "role": "TCF Academy Manager"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

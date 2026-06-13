@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "autoname": "field:location_name",
+ "creation": "2026-05-29 00:00:00",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "location_name",
+  "column_break_basic",
+  "active",
+  "section_break_address",
+  "address",
+  "city",
+  "province",
+  "column_break_contact",
+  "phone",
+  "email",
+  "section_break_details",
+  "manager",
+  "opening_hours",
+  "seats_internal",
+  "seats_external",
+  "column_break_facilities",
+  "has_kids_area",
+  "has_mezzanine"
+ ],
+ "fields": [
+  {
+   "fieldname": "location_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Location Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_basic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active",
+   "default": "1"
+  },
+  {
+   "fieldname": "section_break_address",
+   "fieldtype": "Section Break",
+   "label": "Address"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Text Editor",
+   "label": "Address"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "province",
+   "fieldtype": "Data",
+   "label": "Province"
+  },
+  {
+   "fieldname": "column_break_contact",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "section_break_details",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "manager",
+   "fieldtype": "Link",
+   "label": "Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "opening_hours",
+   "fieldtype": "Small Text",
+   "label": "Opening Hours"
+  },
+  {
+   "fieldname": "seats_internal",
+   "fieldtype": "Int",
+   "label": "Internal Seats"
+  },
+  {
+   "fieldname": "seats_external",
+   "fieldtype": "Int",
+   "label": "External Seats"
+  },
+  {
+   "fieldname": "column_break_facilities",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "has_kids_area",
+   "fieldtype": "Check",
+   "label": "Kids Area"
+  },
+  {
+   "fieldname": "has_mezzanine",
+   "fieldtype": "Check",
+   "label": "Mezzanine"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Restaurant Location",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "location_name"
+}

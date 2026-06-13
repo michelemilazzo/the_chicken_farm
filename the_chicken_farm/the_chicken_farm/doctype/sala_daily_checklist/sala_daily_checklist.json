@@ -1,0 +1,160 @@
+{
+ "autoname": "SALA-.YYYY.-.###",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "location",
+  "date",
+  "service_type",
+  "column_break_1",
+  "opening_responsible",
+  "closing_responsible",
+  "section_break_checks",
+  "bar_checks",
+  "beer_keg_checks",
+  "bathroom_checks",
+  "table_assignment_done",
+  "reservation_printed",
+  "pos_checked",
+  "section_break_notes",
+  "notes",
+  "signature",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Restaurant Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Select",
+   "label": "Service",
+   "options": "Lunch\nDinner",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "opening_responsible",
+   "fieldtype": "Link",
+   "label": "Opening",
+   "options": "User"
+  },
+  {
+   "fieldname": "closing_responsible",
+   "fieldtype": "Link",
+   "label": "Closing",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_checks",
+   "fieldtype": "Section Break",
+   "label": "Checks"
+  },
+  {
+   "fieldname": "bar_checks",
+   "fieldtype": "Check",
+   "label": "Bar Checks"
+  },
+  {
+   "fieldname": "beer_keg_checks",
+   "fieldtype": "Check",
+   "label": "Beer Keg Checks"
+  },
+  {
+   "fieldname": "bathroom_checks",
+   "fieldtype": "Check",
+   "label": "Bathroom Checks"
+  },
+  {
+   "fieldname": "table_assignment_done",
+   "fieldtype": "Check",
+   "label": "Table Assignment Done"
+  },
+  {
+   "fieldname": "reservation_printed",
+   "fieldtype": "Check",
+   "label": "Reservations Printed"
+  },
+  {
+   "fieldname": "pos_checked",
+   "fieldtype": "Check",
+   "label": "POS Checked"
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "Sala Daily Checklist",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Sala Daily Checklist",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "write": 1,
+   "role": "System Manager"
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "role": "TCF Sala Manager"
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "read": 1,
+   "write": 1,
+   "role": "TCF Operator Sala"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

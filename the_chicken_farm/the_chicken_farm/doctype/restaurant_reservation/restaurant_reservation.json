@@ -1,0 +1,162 @@
+{
+ "actions": [],
+ "autoname": "RES-.####",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_name",
+  "phone",
+  "email",
+  "column_break_1",
+  "location",
+  "source",
+  "section_break_date",
+  "reservation_date",
+  "reservation_time",
+  "people_count",
+  "children_count",
+  "column_break_table",
+  "assigned_table",
+  "status",
+  "section_break_notes",
+  "allergy_notes",
+  "event_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Restaurant Location",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "Website\nPhone\nWalk-in\nApp\nOther",
+   "default": "Website"
+  },
+  {
+   "fieldname": "section_break_date",
+   "fieldtype": "Section Break",
+   "label": "Date & Time"
+  },
+  {
+   "fieldname": "reservation_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reservation_time",
+   "fieldtype": "Time",
+   "label": "Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "people_count",
+   "fieldtype": "Int",
+   "label": "People",
+   "reqd": 1
+  },
+  {
+   "fieldname": "children_count",
+   "fieldtype": "Int",
+   "label": "Children"
+  },
+  {
+   "fieldname": "column_break_table",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assigned_table",
+   "fieldtype": "Link",
+   "label": "Assigned Table",
+   "options": "Restaurant Table"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nConfirmed\nArrived\nNo Show\nCancelled",
+   "default": "Pending",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "allergy_notes",
+   "fieldtype": "Small Text",
+   "label": "Allergy Notes"
+  },
+  {
+   "fieldname": "event_notes",
+   "fieldtype": "Small Text",
+   "label": "Event Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-29 00:00:00",
+ "modified_by": "Administrator",
+ "module": "The Chicken Farm",
+ "name": "Restaurant Reservation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 1,
+   "export": 0,
+   "print": 0,
+   "read": 1,
+   "report": 0,
+   "role": "TCF Operator Sala",
+   "share": 0,
+   "write": 1
+  }
+ ],
+ "sort_field": "reservation_date",
+ "sort_order": "DESC",
+ "states": []
+}
