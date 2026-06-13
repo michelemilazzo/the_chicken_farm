@@ -362,11 +362,94 @@ body.tcf-injected-nav { padding-top: 68px; }
 #tcf-nav .nav-links a.active { color: var(--tcf-yellow); }
 
 /* ─────────────────────────────────────
+   BOOK PAGE
+───────────────────────────────────── */
+.bk-hero {
+  position: relative; height: 52vh; min-height: 340px;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+.bk-hero-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center 40%;
+  transform: scale(1.04);
+}
+.bk-hero-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(26,10,2,.18) 0%, rgba(26,10,2,.72) 100%);
+}
+.bk-hero-ct {
+  position: relative; z-index: 1;
+  padding: 0 60px 52px;
+}
+.bk-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3.8rem; color: var(--tcf-cream);
+  line-height: 1.1; margin-top: 8px;
+}
+.bk-sec { padding: 72px 60px 100px; }
+.bk-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 420px; gap: 72px; align-items: start;
+}
+.bk-intro {
+  color: var(--tcf-brown); font-size: 1.05rem;
+  margin-bottom: 36px; line-height: 1.7;
+}
+.bk-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.bk-field { display: flex; flex-direction: column; margin-bottom: 18px; }
+.bk-field label {
+  font-weight: 800; font-size: .8rem;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--tcf-brown); margin-bottom: 6px;
+}
+.bk-field input, .bk-field select, .bk-field textarea {
+  border: 2px solid rgba(61,28,11,.15);
+  border-radius: 10px; padding: 12px 16px;
+  font-size: 1rem; font-family: 'Nunito', sans-serif;
+  background: var(--tcf-white); color: var(--tcf-brown);
+  transition: border .2s;
+}
+.bk-field input:focus, .bk-field select:focus, .bk-field textarea:focus {
+  outline: none; border-color: var(--tcf-yellow);
+}
+.bk-field textarea { resize: vertical; min-height: 80px; }
+.bk-submit { width: 100%; justify-content: center; margin-top: 8px; }
+
+.bk-info-card {
+  background: var(--tcf-charcoal);
+  border-radius: 18px; padding: 40px 36px;
+  color: var(--tcf-cream);
+}
+.bk-info-card .ey { color: var(--tcf-yellow); display: block; margin-bottom: 12px; }
+.bk-address, .bk-phone, .bk-wa {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--tcf-cream); text-decoration: none;
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  transition: color .2s;
+}
+.bk-address:hover, .bk-phone:hover { color: var(--tcf-yellow); }
+.bk-wa { color: #25D366; font-size: 1rem; margin-top: 16px; }
+.bk-wa:hover { color: #20c05a; }
+.bk-divider { border: none; border-top: 1px solid rgba(255,245,224,.12); margin: 28px 0; }
+.bk-hours { display: flex; flex-direction: column; gap: 8px; }
+.bk-hour-row {
+  display: flex; justify-content: space-between;
+  font-size: .95rem; color: var(--tcf-cream);
+}
+.bk-hour-row.closed span { color: var(--tcf-muted); }
+.bk-map { margin-top: 20px; }
+
+/* ─────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────── */
 @media (max-width: 900px) {
   #tcf-nav { padding: 0 20px; }
   #tcf-nav .nav-links { display: none; }
+  .bk-inner { grid-template-columns: 1fr; gap: 48px; }
+  .bk-hero-ct { padding: 0 28px 40px; }
+  .bk-title { font-size: 2.6rem; }
+  .bk-sec { padding: 48px 24px 80px; }
   .pillars { grid-template-columns: repeat(2,1fr); }
   .pillar { border-bottom: 2px solid rgba(61,28,11,.1); }
   .split { grid-template-columns: 1fr; }
@@ -386,6 +469,8 @@ body.tcf-injected-nav { padding-top: 68px; }
   .btns { flex-direction: column; align-items: stretch; }
   .btns .btn { text-align: center; }
   .split .txt { padding: 32px 20px; }
+  .bk-row2 { grid-template-columns: 1fr; }
+  .bk-info-card { padding: 28px 20px; }
 }
 
 /* ── Hide conflicting navbars ── */
