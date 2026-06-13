@@ -1,0 +1,506 @@
+{% extends "templates/web.html" %}
+{% block title %}Booking Manager – TCF{% endblock %}
+{% block head_include %}
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #f7f3ee; font-family: 'Nunito', -apple-system, sans-serif; color: #2B1A0F; }
+.navbar, .page-breadcrumbs, .web-footer, .page-footer { display: none !important; }
+
+/* ── Top Bar ── */
+#bm-header {
+  background: #2B1A0F;
+  padding: 12px 24px;
+  display: flex; align-items: center; gap: 16px;
+  position: sticky; top: 0; z-index: 100;
+}
+#bm-header img { height: 36px; }
+#bm-header .bm-title { color: #FFF5E0; font-size: 1.1rem; font-weight: 800; flex: 1; }
+#bm-date-nav { display: flex; align-items: center; gap: 8px; }
+#bm-date-nav button {
+  background: rgba(255,245,224,.1); border: 1px solid rgba(255,245,224,.2);
+  color: #FFF5E0; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: .9rem;
+  transition: background .2s;
+}
+#bm-date-nav button:hover { background: rgba(255,245,224,.2); }
+#bm-date-input {
+  background: rgba(255,245,224,.1); border: 1px solid rgba(255,245,224,.25);
+  color: #FFF5E0; padding: 6px 12px; border-radius: 8px; font-size: .9rem;
+  color-scheme: dark;
+}
+#bm-today-btn { background: #E0531F !important; border-color: #E0531F !important; }
+
+/* ── Stats Bar ── */
+#bm-stats {
+  display: flex; gap: 12px; padding: 12px 24px; background: white;
+  border-bottom: 1px solid rgba(43,26,15,.1); overflow-x: auto;
+}
+.bm-stat {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 8px 20px; border-radius: 10px; min-width: 90px;
+  background: #f7f3ee; border: 1.5px solid rgba(43,26,15,.08);
+}
+.bm-stat .bm-stat-num { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+.bm-stat .bm-stat-lbl { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #7a6a55; margin-top: 2px; }
+.stat-pending .bm-stat-num { color: #E0531F; }
+.stat-confirmed .bm-stat-num { color: #2d7a2d; }
+.stat-arrived .bm-stat-num { color: #1565c0; }
+.stat-cancelled .bm-stat-num { color: #999; }
+
+/* ── Layout ── */
+#bm-body { display: grid; grid-template-columns: 420px 1fr; gap: 0; min-height: calc(100vh - 120px); }
+
+/* ── Reservations Panel ── */
+#bm-res-panel {
+  background: white; border-right: 1px solid rgba(43,26,15,.1);
+  overflow-y: auto; max-height: calc(100vh - 120px);
+}
+#bm-res-panel h2 { padding: 16px 20px 10px; font-size: .85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #7a6a55; }
+.bm-res-filters { display: flex; gap: 6px; padding: 0 16px 12px; flex-wrap: wrap; }
+.bm-res-filters button {
+  padding: 4px 12px; border-radius: 20px; border: 1.5px solid rgba(43,26,15,.15);
+  background: white; font-size: .78rem; font-weight: 700; cursor: pointer; transition: all .15s;
+}
+.bm-res-filters button.active { background: #2B1A0F; color: #FFF5E0; border-color: #2B1A0F; }
+
+/* ── Reservation Card ── */
+.bm-res-card {
+  margin: 0 12px 10px; border-radius: 12px; overflow: hidden;
+  border: 1.5px solid rgba(43,26,15,.1); transition: box-shadow .2s;
+}
+.bm-res-card:hover { box-shadow: 0 4px 16px rgba(43,26,15,.12); }
+.bm-res-card-head {
+  padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+}
+.bm-res-card-head.pending { background: #fff8f5; border-bottom: 2px solid #E0531F; }
+.bm-res-card-head.confirmed { background: #f0faf0; border-bottom: 2px solid #2d7a2d; }
+.bm-res-card-head.arrived { background: #e8f0fb; border-bottom: 2px solid #1565c0; }
+.bm-res-card-head.cancelled { background: #f5f5f5; border-bottom: 2px solid #ccc; }
+.bm-res-card-head.no-show { background: #f5f5f5; border-bottom: 2px solid #999; }
+.bm-time { font-size: 1.2rem; font-weight: 900; min-width: 44px; }
+.bm-name { flex: 1; font-weight: 800; font-size: .95rem; }
+.bm-people { font-size: .8rem; color: #7a6a55; white-space: nowrap; }
+.bm-badge {
+  font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .5px;
+  padding: 2px 8px; border-radius: 20px;
+}
+.bm-badge.pending { background: #fff0eb; color: #E0531F; }
+.bm-badge.confirmed { background: #e6f4e6; color: #2d7a2d; }
+.bm-badge.arrived { background: #ddeeff; color: #1565c0; }
+.bm-badge.cancelled,.bm-badge.no-show { background: #f0f0f0; color: #888; }
+
+.bm-res-card-body { padding: 10px 14px; background: white; }
+.bm-res-info { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.bm-res-info span { font-size: .8rem; color: #7a6a55; }
+.bm-res-info a { color: #E0531F; text-decoration: none; font-size: .8rem; }
+.bm-allergy { background: #fff3ed; border-radius: 6px; padding: 4px 8px; font-size: .78rem; color: #c0391b; margin-bottom: 8px; }
+.bm-table-tag { font-size: .78rem; font-weight: 700; background: #f7f3ee; padding: 3px 10px; border-radius: 20px; }
+.bm-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.bm-btn {
+  padding: 5px 12px; border-radius: 8px; border: 1.5px solid; font-size: .78rem;
+  font-weight: 800; cursor: pointer; transition: all .15s;
+}
+.bm-btn-confirm { border-color: #2d7a2d; color: #2d7a2d; background: white; }
+.bm-btn-confirm:hover { background: #2d7a2d; color: white; }
+.bm-btn-reject { border-color: #ccc; color: #888; background: white; }
+.bm-btn-reject:hover { background: #eee; }
+.bm-btn-arrived { border-color: #1565c0; color: #1565c0; background: white; }
+.bm-btn-arrived:hover { background: #1565c0; color: white; }
+.bm-btn-noshow { border-color: #bbb; color: #888; background: white; }
+.bm-btn-assign { border-color: #E0531F; color: #E0531F; background: white; }
+.bm-btn-assign:hover { background: #E0531F; color: white; }
+
+/* ── Tables Panel ── */
+#bm-tables-panel { padding: 16px 20px; overflow-y: auto; max-height: calc(100vh - 120px); }
+#bm-tables-panel h2 { font-size: .85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #7a6a55; margin-bottom: 12px; }
+.bm-tables-section { margin-bottom: 24px; }
+.bm-tables-section h3 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid rgba(43,26,15,.08); }
+.bm-tables-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+.bm-table-card {
+  border-radius: 12px; padding: 14px; text-align: center; cursor: pointer;
+  border: 2px solid; transition: all .2s; position: relative;
+}
+.bm-table-card.free { background: #f0faf0; border-color: #2d7a2d; }
+.bm-table-card.partial { background: #fff8f0; border-color: #f5a623; }
+.bm-table-card.full { background: #fdf0f0; border-color: #c0392b; }
+.bm-table-card .bm-t-num { font-size: 1.4rem; font-weight: 900; }
+.bm-table-card .bm-t-cap { font-size: .75rem; color: #7a6a55; margin-top: 2px; }
+.bm-table-card .bm-t-slots { display: flex; gap: 4px; justify-content: center; margin-top: 8px; }
+.bm-slot-dot {
+  font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .5px;
+  padding: 2px 6px; border-radius: 20px;
+}
+.bm-slot-dot.free { background: #e6f4e6; color: #2d7a2d; }
+.bm-slot-dot.reserved { background: #fde8e8; color: #c0392b; }
+.bm-walk-in-btn {
+  margin-top: 20px; width: 100%; padding: 10px;
+  background: #2B1A0F; color: #FFF5E0; border: none; border-radius: 10px;
+  font-weight: 800; font-size: .9rem; cursor: pointer; transition: opacity .2s;
+}
+.bm-walk-in-btn:hover { opacity: .85; }
+
+/* ── Modal ── */
+#bm-modal-bg {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+  z-index: 200; align-items: center; justify-content: center;
+}
+#bm-modal-bg.open { display: flex; }
+#bm-modal {
+  background: white; border-radius: 16px; padding: 28px;
+  max-width: 460px; width: 92%; max-height: 90vh; overflow-y: auto;
+}
+#bm-modal h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 16px; }
+.bm-modal-field { margin-bottom: 14px; }
+.bm-modal-field label { display: block; font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; color: #7a6a55; }
+.bm-modal-field select, .bm-modal-field input, .bm-modal-field textarea {
+  width: 100%; padding: 10px 12px; border-radius: 8px;
+  border: 1.5px solid rgba(43,26,15,.15); font-size: .95rem;
+  font-family: inherit; background: #f7f3ee;
+}
+.bm-modal-field select:focus, .bm-modal-field input:focus { outline: none; border-color: #E0531F; }
+.bm-modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+.bm-modal-actions button {
+  flex: 1; padding: 10px; border-radius: 8px; font-weight: 800; cursor: pointer; border: none;
+}
+.bm-modal-cancel { background: #f0f0f0; color: #555; }
+.bm-modal-ok { background: #E0531F; color: white; }
+.bm-modal-ok.green { background: #2d7a2d; }
+
+/* ── Loading ── */
+.bm-loading { text-align: center; padding: 40px; color: #aaa; font-weight: 700; }
+</style>
+{% endblock %}
+{% block page_content %}
+<div id="bm-header">
+  <img src="/files/tcf_symbol_circle.png" alt="TCF">
+  <span class="bm-title">Booking Manager</span>
+  <div id="bm-date-nav">
+    <button onclick="shiftDate(-1)">‹</button>
+    <input type="date" id="bm-date-input" onchange="loadDate(this.value)">
+    <button id="bm-today-btn" onclick="goToday()">Oggi</button>
+    <button onclick="shiftDate(1)">›</button>
+  </div>
+</div>
+
+<div id="bm-stats">
+  <div class="bm-stat stat-pending"><span class="bm-stat-num" id="s-pending">–</span><span class="bm-stat-lbl">In attesa</span></div>
+  <div class="bm-stat stat-confirmed"><span class="bm-stat-num" id="s-confirmed">–</span><span class="bm-stat-lbl">Confermati</span></div>
+  <div class="bm-stat stat-arrived"><span class="bm-stat-num" id="s-arrived">–</span><span class="bm-stat-lbl">Arrivati</span></div>
+  <div class="bm-stat stat-cancelled"><span class="bm-stat-num" id="s-cancelled">–</span><span class="bm-stat-lbl">Cancellati</span></div>
+  <div class="bm-stat"><span class="bm-stat-num" id="s-people" style="color:#E0531F">–</span><span class="bm-stat-lbl">Coperti</span></div>
+</div>
+
+<div id="bm-body">
+  <div id="bm-res-panel">
+    <h2>Prenotazioni</h2>
+    <div class="bm-res-filters">
+      <button class="active" onclick="filterStatus(this,'all')">Tutte</button>
+      <button onclick="filterStatus(this,'Pending')">In attesa</button>
+      <button onclick="filterStatus(this,'Confirmed')">Confermate</button>
+      <button onclick="filterStatus(this,'Arrived')">Arrivati</button>
+    </div>
+    <div id="bm-res-list"><div class="bm-loading">Caricamento…</div></div>
+  </div>
+
+  <div id="bm-tables-panel">
+    <h2>Tavoli</h2>
+    <div id="bm-tables-content"><div class="bm-loading">Caricamento…</div></div>
+    <button class="bm-walk-in-btn" onclick="openWalkIn()">+ Walk-in</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="bm-modal-bg" onclick="if(event.target===this)closeModal()">
+  <div id="bm-modal">
+    <h3 id="bm-modal-title">Azione</h3>
+    <div id="bm-modal-body"></div>
+    <div class="bm-modal-actions">
+      <button class="bm-modal-cancel" onclick="closeModal()">Annulla</button>
+      <button class="bm-modal-ok" id="bm-modal-ok" onclick="submitModal()">Conferma</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var _currentDate = '';
+var _data = {};
+var _activeFilter = 'all';
+var _modalAction = null;
+var _modalData = {};
+
+function isoDate(d) {
+  return d.toISOString().split('T')[0];
+}
+function fmtDate(s) {
+  var d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('it-IT', { weekday:'short', day:'numeric', month:'long' });
+}
+function goToday() {
+  loadDate(isoDate(new Date()));
+}
+function shiftDate(delta) {
+  var d = new Date(_currentDate + 'T00:00:00');
+  d.setDate(d.getDate() + delta);
+  loadDate(isoDate(d));
+}
+
+function loadDate(date) {
+  _currentDate = date;
+  document.getElementById('bm-date-input').value = date;
+  document.getElementById('bm-res-list').innerHTML = '<div class="bm-loading">Caricamento…</div>';
+  document.getElementById('bm-tables-content').innerHTML = '<div class="bm-loading">Caricamento…</div>';
+  frappe.call({
+    method: 'the_chicken_farm.api.get_day_data',
+    args: { date: date },
+    callback: function(r) {
+      if (r.message) {
+        _data = r.message;
+        renderStats(_data.stats);
+        renderReservations(_data.reservations);
+        renderTables(_data.tables);
+      }
+    }
+  });
+}
+
+function renderStats(s) {
+  document.getElementById('s-pending').textContent = s.pending;
+  document.getElementById('s-confirmed').textContent = s.confirmed;
+  document.getElementById('s-arrived').textContent = s.arrived;
+  document.getElementById('s-cancelled').textContent = s.cancelled;
+  document.getElementById('s-people').textContent = s.people;
+}
+
+function statusClass(st) {
+  var m = {Pending:'pending',Confirmed:'confirmed',Arrived:'arrived',Cancelled:'cancelled','No Show':'no-show'};
+  return m[st] || 'pending';
+}
+function statusLabel(st) {
+  var m = {Pending:'In attesa',Confirmed:'Confermata',Arrived:'Arrivata',Cancelled:'Cancellata','No Show':'No Show'};
+  return m[st] || st;
+}
+
+function renderReservations(list) {
+  var filtered = _activeFilter === 'all' ? list : list.filter(function(r){ return r.status === _activeFilter; });
+  if (!filtered.length) {
+    document.getElementById('bm-res-list').innerHTML = '<div class="bm-loading" style="color:#bbb">Nessuna prenotazione</div>';
+    return;
+  }
+  var html = '';
+  filtered.forEach(function(r) {
+    var sc = statusClass(r.status);
+    var time = (r.reservation_time || '').substring(0,5);
+    var actions = '';
+    if (r.status === 'Pending') {
+      actions = '<button class="bm-btn bm-btn-confirm" onclick="doConfirm(\''+r.name+'\')">✓ Conferma</button>' +
+                '<button class="bm-btn bm-btn-assign" onclick="doAssign(\''+r.name+'\',\''+r.reservation_time+'\','+r.people_count+')">🪑 Tavolo</button>' +
+                '<button class="bm-btn bm-btn-reject" onclick="doReject(\''+r.name+'\')">✗ Rifiuta</button>';
+    } else if (r.status === 'Confirmed') {
+      actions = '<button class="bm-btn bm-btn-arrived" onclick="doSetStatus(\''+r.name+'\',\'Arrived\')">✓ Arrivato</button>' +
+                '<button class="bm-btn bm-btn-assign" onclick="doAssign(\''+r.name+'\',\''+r.reservation_time+'\','+r.people_count+')">🪑 Tavolo</button>' +
+                '<button class="bm-btn bm-btn-noshow" onclick="doSetStatus(\''+r.name+'\',\'No Show\')">No Show</button>';
+    }
+    var tableTag = r.assigned_table ? '<span class="bm-table-tag">🪑 ' + r.assigned_table + '</span>' : '';
+    var allergy = r.allergy_notes ? '<div class="bm-allergy">⚠️ ' + frappe.utils.escape_html(r.allergy_notes) + '</div>' : '';
+    var note = r.event_notes ? '<span style="font-size:.78rem;color:#999;margin-left:4px">· '+frappe.utils.escape_html(r.event_notes)+'</span>' : '';
+
+    html += '<div class="bm-res-card" id="card-'+r.name+'">' +
+      '<div class="bm-res-card-head ' + sc + '">' +
+        '<span class="bm-time">' + time + '</span>' +
+        '<div style="flex:1">' +
+          '<div class="bm-name">' + frappe.utils.escape_html(r.customer_name) + '</div>' +
+          '<div class="bm-people">👥 ' + r.people_count + (r.children_count ? ' (+'+r.children_count+' 👶)':'') + '</div>' +
+        '</div>' +
+        '<span class="bm-badge ' + sc + '">' + statusLabel(r.status) + '</span>' +
+      '</div>' +
+      '<div class="bm-res-card-body">' +
+        '<div class="bm-res-info">' +
+          (r.phone ? '<a href="tel:'+r.phone+'">📞 '+r.phone+'</a>' : '') +
+          (r.email ? '<a href="mailto:'+r.email+'">✉ '+r.email+'</a>' : '') +
+          tableTag + note +
+        '</div>' +
+        allergy +
+        (actions ? '<div class="bm-actions">' + actions + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  });
+  document.getElementById('bm-res-list').innerHTML = html;
+}
+
+function renderTables(tables) {
+  var areas = {};
+  tables.forEach(function(t) { areas[t.area] = areas[t.area] || []; areas[t.area].push(t); });
+  var html = '';
+  Object.keys(areas).sort().forEach(function(area) {
+    html += '<div class="bm-tables-section"><h3>' + area + '</h3><div class="bm-tables-grid">';
+    areas[area].forEach(function(t) {
+      var both = t.lunch === 'reserved' && t.dinner === 'reserved';
+      var cls = both ? 'full' : (t.lunch === 'reserved' || t.dinner === 'reserved' ? 'partial' : 'free');
+      var rInfo = '';
+      if (t.reservations && t.reservations.length) {
+        rInfo = t.reservations.map(function(r){ return (r.reservation_time||'').substring(0,5)+' '+r.customer_name; }).join('<br>');
+      }
+      html += '<div class="bm-table-card ' + cls + '" title="' + frappe.utils.escape_html(rInfo||'Libero') + '" onclick="tableClick(\''+t.name+'\')">' +
+        '<div class="bm-t-num">T' + t.table_number + '</div>' +
+        '<div class="bm-t-cap">' + t.capacity + ' posti</div>' +
+        '<div class="bm-t-slots">' +
+          '<span class="bm-slot-dot ' + t.lunch + '">P</span>' +
+          '<span class="bm-slot-dot ' + t.dinner + '">C</span>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('bm-tables-content').innerHTML = html;
+}
+
+function filterStatus(btn, status) {
+  document.querySelectorAll('.bm-res-filters button').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _activeFilter = status;
+  renderReservations(_data.reservations || []);
+}
+
+function tableClick(tableName) {
+  var table = (_data.tables || []).find(function(t){ return t.name === tableName; });
+  if (!table) return;
+  var title = 'Tavolo ' + table.table_number + ' (' + table.area + ') – ' + table.capacity + ' posti';
+  var body = '';
+  if (table.reservations && table.reservations.length) {
+    body = '<p style="margin-bottom:8px;font-weight:700">Prenotazioni:</p>';
+    table.reservations.forEach(function(r) {
+      body += '<p style="margin-bottom:4px">'+((r.reservation_time||'').substring(0,5))+' – ' + frappe.utils.escape_html(r.customer_name) + ' (' + r.people_count + ' pers.) – <em>'+r.status+'</em></p>';
+    });
+  } else {
+    body = '<p style="color:#2d7a2d;font-weight:700">Tavolo libero</p>';
+  }
+  openModal(title, body, null, null);
+  document.getElementById('bm-modal-ok').style.display = 'none';
+}
+
+function doConfirm(name) {
+  var res = (_data.reservations || []).find(function(r){ return r.name === name; });
+  if (!res) return;
+  _modalAction = 'confirm';
+  _modalData = { name: name, time: res.reservation_time, people: res.people_count };
+  frappe.call({
+    method: 'the_chicken_farm.api.get_available_tables',
+    args: { date: _currentDate, time_str: res.reservation_time, people_count: res.people_count },
+    callback: function(r) {
+      var tables = r.message || [];
+      var opts = tables.map(function(t){
+        return '<option value="'+t.name+'">T'+t.table_number+' ('+t.area+') – '+t.capacity+' posti</option>';
+      }).join('');
+      var body = '<div class="bm-modal-field"><label>Assegna tavolo (opzionale)</label><select id="m-table"><option value="">— Nessuno —</option>'+opts+'</select></div>';
+      if (res.assigned_table) {
+        body += '<p style="font-size:.8rem;color:#7a6a55;margin-top:4px">Attuale: ' + res.assigned_table + '</p>';
+      }
+      openModal('Conferma prenotazione', body, 'confirm', 'green');
+    }
+  });
+}
+
+function doAssign(name, timeStr, people) {
+  _modalAction = 'assign';
+  _modalData = { name: name };
+  frappe.call({
+    method: 'the_chicken_farm.api.get_available_tables',
+    args: { date: _currentDate, time_str: timeStr, people_count: people },
+    callback: function(r) {
+      var tables = r.message || [];
+      var opts = tables.map(function(t){
+        return '<option value="'+t.name+'">T'+t.table_number+' ('+t.area+') – '+t.capacity+' posti</option>';
+      }).join('');
+      if (!opts) opts = '<option disabled>Nessun tavolo disponibile</option>';
+      var body = '<div class="bm-modal-field"><label>Tavolo</label><select id="m-table"><option value="">— Nessuno —</option>'+opts+'</select></div>';
+      openModal('Assegna tavolo', body, 'assign', '');
+    }
+  });
+}
+
+function doReject(name) {
+  _modalAction = 'reject';
+  _modalData = { name: name };
+  var body = '<div class="bm-modal-field"><label>Motivo (opzionale)</label><input id="m-reason" placeholder="es. locale pieno, data chiusura…"></div>';
+  openModal('Rifiuta prenotazione', body, 'reject', '');
+}
+
+function doSetStatus(name, status) {
+  frappe.call({
+    method: 'the_chicken_farm.api.set_arrival_status',
+    args: { name: name, status: status },
+    callback: function(){ loadDate(_currentDate); }
+  });
+}
+
+function openWalkIn() {
+  _modalAction = 'walkin';
+  _modalData = {};
+  var tables = (_data.tables || []).filter(function(t){ return t.lunch === 'free' || t.dinner === 'free'; });
+  var opts = tables.map(function(t){
+    return '<option value="'+t.name+'">T'+t.table_number+' ('+t.area+') – '+t.capacity+' posti</option>';
+  }).join('');
+  var body = '<div class="bm-modal-field"><label>Tavolo</label><select id="m-wi-table">'+opts+'</select></div>' +
+    '<div class="bm-modal-field"><label>Persone</label><input type="number" id="m-wi-pax" value="2" min="1" max="20"></div>' +
+    '<div class="bm-modal-field"><label>Bambini</label><input type="number" id="m-wi-kids" value="0" min="0"></div>' +
+    '<div class="bm-modal-field"><label>Nota</label><input id="m-wi-note" placeholder="Occasione speciale…"></div>';
+  openModal('Walk-in', body, 'walkin', 'green');
+}
+
+function openModal(title, body, action, btnClass) {
+  document.getElementById('bm-modal-title').textContent = title;
+  document.getElementById('bm-modal-body').innerHTML = body;
+  var okBtn = document.getElementById('bm-modal-ok');
+  okBtn.style.display = action ? '' : 'none';
+  okBtn.className = 'bm-modal-ok' + (btnClass ? ' ' + btnClass : '');
+  document.getElementById('bm-modal-bg').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('bm-modal-bg').classList.remove('open');
+  _modalAction = null;
+}
+
+function submitModal() {
+  if (_modalAction === 'confirm') {
+    var table = document.getElementById('m-table').value;
+    frappe.call({
+      method: 'the_chicken_farm.api.confirm_reservation',
+      args: { name: _modalData.name, table_name: table || null },
+      callback: function(){ closeModal(); loadDate(_currentDate); }
+    });
+  } else if (_modalAction === 'assign') {
+    var table = document.getElementById('m-table').value;
+    frappe.call({
+      method: 'the_chicken_farm.api.assign_table',
+      args: { name: _modalData.name, table_name: table || null },
+      callback: function(){ closeModal(); loadDate(_currentDate); }
+    });
+  } else if (_modalAction === 'reject') {
+    var reason = document.getElementById('m-reason').value;
+    frappe.call({
+      method: 'the_chicken_farm.api.reject_reservation',
+      args: { name: _modalData.name, reason: reason },
+      callback: function(){ closeModal(); loadDate(_currentDate); }
+    });
+  } else if (_modalAction === 'walkin') {
+    var table = document.getElementById('m-wi-table').value;
+    var pax = document.getElementById('m-wi-pax').value;
+    var kids = document.getElementById('m-wi-kids').value;
+    var note = document.getElementById('m-wi-note').value;
+    if (!table) { frappe.msgprint('Seleziona un tavolo'); return; }
+    frappe.call({
+      method: 'the_chicken_farm.api.create_walk_in',
+      args: { table_name: table, people_count: pax, children_count: kids, note: note },
+      callback: function(){ closeModal(); loadDate(_currentDate); }
+    });
+  }
+}
+
+// Auto-refresh ogni 60s
+setInterval(function(){ if(_currentDate) loadDate(_currentDate); }, 60000);
+
+// Init
+goToday();
+</script>
+{% endblock %}

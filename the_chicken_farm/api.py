@@ -3,10 +3,231 @@
 
 import frappe
 from frappe import _
-from frappe.utils import cint, getdate
+from frappe.utils import cint, getdate, now_datetime, format_time
 
 STAFF_EMAIL = "lucca@thechickenfarm.it"
 SENDER = "The Chicken Farm <no-replies@onekeyco.com>"
+
+# ─── Booking slot helpers ────────────────────────────────────────────────────
+
+def _slot(time_str):
+	"""Return 'lunch' or 'dinner' given a HH:MM time string."""
+	try:
+		h = int(str(time_str).split(":")[0])
+	except Exception:
+		return "dinner"
+	return "lunch" if h < 16 else "dinner"
+
+
+def _slot_range(slot):
+	"""Return (start_h, end_h) for a slot."""
+	return (12, 16) if slot == "lunch" else (18, 24)
+
+
+def _tables_occupied_in_slot(date, slot, exclude_reservation=None):
+	"""Return set of table names that are reserved/confirmed in a slot."""
+	start_h, end_h = _slot_range(slot)
+	filters = {
+		"reservation_date": date,
+		"status": ["in", ["Pending", "Confirmed", "Arrived"]],
+		"assigned_table": ["!=", ""],
+	}
+	rows = frappe.get_all(
+		"Restaurant Reservation",
+		filters=filters,
+		fields=["name", "assigned_table", "reservation_time"],
+	)
+	occupied = set()
+	for r in rows:
+		if exclude_reservation and r.name == exclude_reservation:
+			continue
+		if not r.assigned_table:
+			continue
+		try:
+			h = int(str(r.reservation_time).split(":")[0])
+		except Exception:
+			continue
+		if start_h <= h < end_h:
+			occupied.add(r.assigned_table)
+	return occupied
+
+
+# ─── Booking manager APIs ────────────────────────────────────────────────────
+
+@frappe.whitelist()
+def get_day_data(date):
+	"""Return all reservations + all tables with slot-status for the booking manager."""
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+
+	reservations = frappe.get_all(
+		"Restaurant Reservation",
+		filters={"reservation_date": date},
+		fields=[
+			"name", "customer_name", "phone", "email",
+			"reservation_time", "people_count", "children_count",
+			"assigned_table", "status", "allergy_notes", "event_notes", "source",
+		],
+		order_by="reservation_time asc",
+	)
+	for r in reservations:
+		r["slot"] = _slot(r["reservation_time"])
+
+	tables = frappe.get_all(
+		"Restaurant Table",
+		fields=["name", "table_number", "area", "capacity", "status"],
+		order_by="area asc, table_number asc",
+	)
+	lunch_occ = _tables_occupied_in_slot(date, "lunch")
+	dinner_occ = _tables_occupied_in_slot(date, "dinner")
+	res_by_table = {}
+	for r in reservations:
+		if r.assigned_table:
+			res_by_table.setdefault(r.assigned_table, []).append(r)
+
+	for t in tables:
+		t["lunch"] = "reserved" if t["name"] in lunch_occ else "free"
+		t["dinner"] = "reserved" if t["name"] in dinner_occ else "free"
+		t["reservations"] = res_by_table.get(t["name"], [])
+
+	stats = {
+		"total": len(reservations),
+		"pending": sum(1 for r in reservations if r["status"] == "Pending"),
+		"confirmed": sum(1 for r in reservations if r["status"] == "Confirmed"),
+		"arrived": sum(1 for r in reservations if r["status"] == "Arrived"),
+		"cancelled": sum(1 for r in reservations if r["status"] in ("Cancelled", "No Show")),
+		"people": sum(r["people_count"] or 0 for r in reservations if r["status"] not in ("Cancelled", "No Show")),
+	}
+	return {"reservations": reservations, "tables": tables, "stats": stats}
+
+
+@frappe.whitelist()
+def get_available_tables(date, time_str, people_count):
+	"""Return tables free for the slot of time_str with capacity >= people_count."""
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+	slot = _slot(time_str)
+	occupied = _tables_occupied_in_slot(date, slot)
+	pcount = cint(people_count) or 1
+	tables = frappe.get_all(
+		"Restaurant Table",
+		filters={"status": "Available"},
+		fields=["name", "table_number", "area", "capacity"],
+		order_by="capacity asc",
+	)
+	return [t for t in tables if t["name"] not in occupied and t["capacity"] >= pcount]
+
+
+@frappe.whitelist()
+def confirm_reservation(name, table_name=None):
+	"""Confirm a reservation, optionally assigning a table. Sends confirmation email."""
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+	doc = frappe.get_doc("Restaurant Reservation", name)
+	doc.status = "Confirmed"
+	if table_name:
+		doc.assigned_table = table_name
+	doc.save(ignore_permissions=True)
+	frappe.db.commit()
+	try:
+		_send_customer_confirmed(doc)
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "TCF: errore email conferma prenotazione")
+	return {"ok": True}
+
+
+@frappe.whitelist()
+def reject_reservation(name, reason=""):
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+	doc = frappe.get_doc("Restaurant Reservation", name)
+	doc.status = "Cancelled"
+	if reason:
+		doc.event_notes = (doc.event_notes or "") + f"\n[Rifiutata: {reason}]"
+	doc.save(ignore_permissions=True)
+	frappe.db.commit()
+	return {"ok": True}
+
+
+@frappe.whitelist()
+def set_arrival_status(name, status):
+	"""Set Arrived or No Show."""
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+	if status not in ("Arrived", "No Show"):
+		frappe.throw("Invalid status")
+	doc = frappe.get_doc("Restaurant Reservation", name)
+	doc.status = status
+	doc.save(ignore_permissions=True)
+	frappe.db.commit()
+	return {"ok": True}
+
+
+@frappe.whitelist()
+def assign_table(name, table_name):
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+	doc = frappe.get_doc("Restaurant Reservation", name)
+	doc.assigned_table = table_name or None
+	doc.save(ignore_permissions=True)
+	frappe.db.commit()
+	return {"ok": True}
+
+
+@frappe.whitelist()
+def create_walk_in(table_name, people_count, children_count=0, note=""):
+	"""Create an instantly-confirmed walk-in reservation."""
+	frappe.only_for(["System Manager", "TCF Operator Sala"])
+	from frappe.utils import nowdate, now
+	import datetime
+	t = frappe.get_doc("Restaurant Table", table_name)
+	now_t = datetime.datetime.now().strftime("%H:%M:%S")
+	doc = frappe.get_doc({
+		"doctype": "Restaurant Reservation",
+		"customer_name": f"Walk-in T{t.table_number}",
+		"source": "Walk-in",
+		"reservation_date": nowdate(),
+		"reservation_time": now_t,
+		"people_count": cint(people_count) or 1,
+		"children_count": cint(children_count),
+		"assigned_table": table_name,
+		"status": "Arrived",
+		"event_notes": note or "",
+	})
+	doc.insert(ignore_permissions=True)
+	frappe.db.commit()
+	return {"ok": True, "name": doc.name}
+
+
+def _send_customer_confirmed(doc):
+	"""Email di conferma con tavolo assegnato (se presente)."""
+	if not doc.email:
+		return
+	table_info = ""
+	if doc.assigned_table:
+		t = frappe.get_doc("Restaurant Table", doc.assigned_table)
+		table_info = f"<tr><td style='padding:8px 0;color:#888'>🪑 Tavolo</td><td style='padding:8px 0;font-weight:bold'>Tavolo {t.table_number} ({t.area}) – {t.capacity} posti</td></tr>"
+
+	subject = "Prenotazione confermata ✅ – The Chicken Farm 🐓"
+	body = f"""<div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+<div style="background:#2B1A0F;padding:32px;text-align:center">
+  <img src="https://thechickenfarm.it/files/tcf_logo_white.png" alt="The Chicken Farm" style="height:90px">
+</div>
+<div style="padding:32px;background:#FFF5E0">
+  <h2 style="color:#2B1A0F">Ciao {doc.customer_name},<br>la tua prenotazione è <span style="color:#2d7a2d">CONFERMATA</span>! 🐓</h2>
+  <div style="background:white;border-radius:12px;padding:20px;margin:20px 0">
+    <table style="width:100%;border-collapse:collapse">
+      <tr><td style="padding:8px 0;color:#888">📅 Data</td><td style="padding:8px 0;font-weight:bold">{doc.reservation_date}</td></tr>
+      <tr><td style="padding:8px 0;color:#888">🕐 Ora</td><td style="padding:8px 0;font-weight:bold">{str(doc.reservation_time)[:5]}</td></tr>
+      <tr><td style="padding:8px 0;color:#888">👥 Persone</td><td style="padding:8px 0;font-weight:bold">{doc.people_count}</td></tr>
+      {table_info}
+      <tr><td style="padding:8px 0;color:#888">📍 Dove</td><td style="padding:8px 0;font-weight:bold">Borgo Giannotti 435, Lucca</td></tr>
+    </table>
+  </div>
+  <p style="color:#7a6a55;font-size:.9rem">Per modifiche: <a href="tel:+393333727816" style="color:#E0531F;font-weight:bold">+39 333 372 7816</a></p>
+  <div style="text-align:center;margin-top:24px">
+    <a href="https://thechickenfarm.it/menu" style="background:#E0531F;color:white;padding:12px 28px;border-radius:50px;text-decoration:none;font-weight:bold">Scopri il menu →</a>
+  </div>
+</div>
+<div style="background:#2B1A0F;padding:16px;text-align:center;color:rgba(255,245,224,.5);font-size:.8rem">
+  The Chicken Farm® · Borgo Giannotti 435, Lucca
+</div>
+</div>"""
+	frappe.sendmail(recipients=[doc.email], sender=SENDER, subject=subject, message=body, delayed=False, retry=2)
 
 
 def _clean(value, maxlen=140):
