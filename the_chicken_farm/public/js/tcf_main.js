@@ -1,16 +1,1 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const app = document.getElementById('tcf-app');
-    if (!app) return;
-
-    // i18n: IT di default, EN solo se esplicitamente selezionato
-    const lang = localStorage.getItem('tcf-lang') || 'it';
-    app.setAttribute('data-lang', lang);
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-});
+(()=>{(function(){if(!(document.getElementById("app")||document.querySelector(".frappe-app"))){var r='<nav id="tcf-nav"><div class="nav-logo"><a href="/"><img src="/files/tcf_symbol_circle.png" alt="The Chicken Farm"></a></div><ul class="nav-links"><li><a href="/menu">Menu</a></li><li><a href="/shop">Ordina Online</a></li><li><a href="/franchise">Franchise</a></li><li><a href="/contact">Contatti</a></li></ul><div class="nav-right"><a href="/book" class="nav-cta">Prenota</a></div></nav>',c='<footer id="tcf-footer"><div class="tf-inner"><img src="/files/tcf_symbol_circle.png" alt="The Chicken Farm" class="tf-logo"><nav class="tf-links"><a href="/menu">Menu</a><a href="/shop">Ordina</a><a href="/book">Prenota</a><a href="/franchise">Franchise</a><a href="/contact">Contatti</a></nav><p class="tf-legal">\xA9 2025 BMAS S.r.l. &nbsp;\xB7&nbsp; Borgo Giannotti 435, Lucca &nbsp;\xB7&nbsp; P.IVA 13600510963</p></div></footer>';document.addEventListener("DOMContentLoaded",function(){document.getElementById("tcf-nav")||(document.body.insertAdjacentHTML("afterbegin",r),document.body.classList.add("tcf-injected-nav")),document.getElementById("tcf-footer")||document.body.insertAdjacentHTML("beforeend",c);var t=document.getElementById("tcf-app");if(t){var i=localStorage.getItem("tcf-lang")||"it";t.setAttribute("data-lang",i)}var o=new IntersectionObserver(function(e){e.forEach(function(a){a.isIntersecting&&a.target.classList.add("visible")})},{threshold:.1});document.querySelectorAll(".reveal").forEach(function(e){o.observe(e)});var n=window.location.pathname.replace(/\/$/,"");document.querySelectorAll("#tcf-nav .nav-links a").forEach(function(e){var a=e.getAttribute("href").replace(/\/$/,"");(n===a||a!==""&&n.startsWith(a))&&e.classList.add("active")})})}})();})();

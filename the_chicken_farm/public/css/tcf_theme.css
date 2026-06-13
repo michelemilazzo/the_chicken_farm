@@ -330,15 +330,36 @@ body[data-path="home"] .page-breadcrumbs,
 .coming-input:focus { border-color: var(--tcf-yellow); }
 
 /* ─────────────────────────────────────
-   FOOTER
+   FOOTER TCF
 ───────────────────────────────────── */
-.web-footer, #tcf-footer {
-  background: var(--tcf-charcoal) !important;
-  border-top: 2px solid rgba(245,168,0,.1);
-  padding: 32px 0 !important;
+.web-footer { display: none !important; }
+
+#tcf-footer {
+  background: var(--tcf-charcoal);
+  border-top: 3px solid rgba(245,168,0,.12);
+  padding: 44px 40px 28px;
+  text-align: center;
 }
-.web-footer .footer-powered,
-.web-footer .footer-powered a { color: rgba(255,245,224,.25) !important; font-size: .8rem; }
+#tcf-footer .tf-inner { max-width: 1100px; margin: 0 auto; }
+#tcf-footer .tf-logo { height: 48px; margin-bottom: 22px; opacity: .8; }
+#tcf-footer .tf-links {
+  display: flex; gap: 28px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 20px;
+}
+#tcf-footer .tf-links a {
+  color: var(--tcf-muted);
+  font-weight: 800; font-size: .78rem;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  text-decoration: none; transition: color .2s;
+}
+#tcf-footer .tf-links a:hover { color: var(--tcf-yellow); }
+#tcf-footer .tf-legal { color: rgba(255,245,224,.22); font-size: .75rem; font-weight: 700; }
+
+/* Padding body quando navbar è iniettata via JS (pagine senza navbar TCF nell'HTML) */
+body.tcf-injected-nav { padding-top: 68px; }
+
+/* Link attivo nella navbar */
+#tcf-nav .nav-links a.active { color: var(--tcf-yellow); }
 
 /* ─────────────────────────────────────
    RESPONSIVE
