@@ -23,5 +23,3 @@ website_redirects = [
 ]
 
 fixtures = []
-
-has_website_permission = False
