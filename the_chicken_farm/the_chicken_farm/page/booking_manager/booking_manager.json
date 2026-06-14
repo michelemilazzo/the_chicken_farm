@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "The Chicken Farm",
+ "name": "booking-manager",
+ "page_name": "booking-manager",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "TCF Operator Sala"
+  }
+ ],
+ "standard": "Yes",
+ "title": "Booking Manager"
+}
