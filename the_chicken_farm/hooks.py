@@ -4,6 +4,7 @@ app_publisher = "BMAS S.r.l."
 app_description = "Restaurant operations, HACCP, franchise and academy system"
 app_email = "info@thechickenfarm.it"
 app_license = "mit"
+app_logo_url = "/assets/the_chicken_farm/images/tcf_logo_circle.svg"
 
 required_apps = ["frappe", "erpnext", "webshop"]
 
