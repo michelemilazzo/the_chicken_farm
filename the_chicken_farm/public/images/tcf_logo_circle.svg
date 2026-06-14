@@ -1,50 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <!-- Cream circle background -->
-  <circle cx="100" cy="100" r="96" fill="#F5EDD8" stroke="#2B1A0A" stroke-width="5"/>
+  <circle cx="100" cy="100" r="96" fill="#2B1A0A"/>
 
-  <!-- Compass cross arms -->
-  <rect x="98.5" y="58" width="3" height="84" fill="#2B1A0A" rx="1.5"/>
-  <rect x="38" y="98.5" width="124" height="3" fill="#2B1A0A" rx="1.5"/>
+  <rect x="98" y="60" width="4" height="80" fill="#FFFFFF" rx="1"/>
+  <rect x="40" y="98" width="120" height="4" fill="#FFFFFF" rx="1"/>
 
-  <!-- Arrowhead E -->
-  <polygon points="162,100 153,95 153,105" fill="#2B1A0A"/>
-  <!-- Arrowhead W -->
-  <polygon points="38,100 47,95 47,105" fill="#2B1A0A"/>
+  <polygon points="160,98 152,93 152,103" fill="#FFFFFF"/>
+  <polygon points="40,100 48,95 48,105" fill="#FFFFFF"/>
 
-  <!-- Cardinal labels -->
-  <text x="100" y="54" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#2B1A0A" text-anchor="middle">N</text>
-  <text x="100" y="155" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#2B1A0A" text-anchor="middle">S</text>
-  <text x="168" y="104" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#2B1A0A" text-anchor="middle">E</text>
-  <text x="32" y="104" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#2B1A0A" text-anchor="middle">W</text>
+  <text x="50" y="116" font-family="Georgia, serif" font-size="11" font-weight="bold" fill="#FFFFFF" text-anchor="middle">S</text>
+  <text x="148" y="116" font-family="Georgia, serif" font-size="11" font-weight="bold" fill="#FFFFFF" text-anchor="middle">N</text>
 
-  <!-- Tail feathers -->
-  <path d="M76,72 Q60,52 66,74 Q54,60 64,80 Q52,70 66,86" fill="#8B4513" stroke="#5C2D0A" stroke-width="1"/>
-
-  <!-- Rooster body -->
-  <ellipse cx="100" cy="90" rx="20" ry="24" fill="#C8860A" stroke="#8B5A00" stroke-width="1.5"/>
-
-  <!-- Wing detail -->
-  <ellipse cx="97" cy="92" rx="12" ry="9" fill="#A06800" stroke="none" opacity=".6"/>
-
-  <!-- Neck -->
-  <ellipse cx="112" cy="74" rx="8" ry="10" fill="#C8860A" stroke="#8B5A00" stroke-width="1"/>
-
-  <!-- Head -->
-  <circle cx="114" cy="63" r="11" fill="#C8860A" stroke="#8B5A00" stroke-width="1.5"/>
-
-  <!-- Comb -->
-  <path d="M108,54 Q110,46 112,53 Q114,44 116,53 Q118,47 120,53" fill="#CC2200" stroke="#990000" stroke-width="1"/>
-
-  <!-- Wattle -->
-  <ellipse cx="121" cy="70" rx="4" ry="5" fill="#CC2200" stroke="#990000" stroke-width="1"/>
-
-  <!-- Beak -->
-  <polygon points="125,62 133,65 125,68" fill="#E8A020" stroke="#B07800" stroke-width="1"/>
-
-  <!-- Eye -->
-  <circle cx="118" cy="61" r="3" fill="#1A0A00"/>
-  <circle cx="118.8" cy="60.2" r="1" fill="white"/>
-
-  <!-- Leg/pole down -->
-  <rect x="99" y="113" width="3" height="18" fill="#2B1A0A" rx="1"/>
+  <ellipse cx="100" cy="80" rx="18" ry="22" fill="#FFFFFF"/>
+  <circle cx="113" cy="62" r="10" fill="#FFFFFF"/>
+  <polygon points="123,61 129,63 123,65" fill="#FFFFFF"/>
+  <circle cx="116" cy="60" r="2" fill="#2B1A0A"/>
+  <circle cx="116.5" cy="59.5" r=".6" fill="#FFFFFF"/>
+  <path d="M109,54 Q111,48 113,54 Q115,47 117,54 Q119,49 121,54" fill="#FFFFFF" stroke="none"/>
+  <ellipse cx="122" cy="67" rx="3" ry="4" fill="#FFFFFF"/>
+  <path d="M82,68 Q68,52 72,72 Q62,58 70,78 Q60,68 72,82" fill="#FFFFFF" stroke="none"/>
+  <ellipse cx="97" cy="82" rx="10" ry="7" fill="#2B1A0A" opacity=".25"/>
+  <rect x="99" y="100" width="3" height="20" fill="#FFFFFF" rx="1"/>
 </svg>
