@@ -492,6 +492,4 @@ nav.links { display: none !important; }
 
 /* booking manager styles are in page/booking_manager/booking_manager.css */
 
-/* ── Login: nascondi solo navbar TCF (non pertinente sul login) ── */
-body[data-path="login"] #tcf-nav { display: none !important; }
 
