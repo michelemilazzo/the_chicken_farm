@@ -22,4 +22,5 @@ scheduler_events = {}
 
 fixtures = [
     {"doctype": "Role", "filters": [["name", "like", "TCF %"]]},
+    {"doctype": "Workspace", "filters": [["name", "=", "The Chicken Farm"]]},
 ]
