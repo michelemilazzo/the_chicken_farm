@@ -8,7 +8,7 @@ app_logo_url = "/assets/the_chicken_farm/images/tcf_logo_circle.svg"
 
 required_apps = ["frappe", "erpnext", "webshop"]
 
-web_include_css = "/assets/the_chicken_farm/css/tcf_theme.css?v=202606141200"
+web_include_css = "/assets/the_chicken_farm/css/tcf_theme.css?v=202606141430"
 web_include_js = "/assets/the_chicken_farm/js/tcf_main.js?v=202606141200"
 
 website_redirects = [

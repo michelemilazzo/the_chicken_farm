@@ -492,3 +492,160 @@ nav.links { display: none !important; }
 
 /* booking manager styles are in page/booking_manager/booking_manager.css */
 
+/* ── Login page override ── */
+body[data-path="login"] #tcf-nav,
+body[data-path="login"] .web-header,
+body[data-path="login"] nav { display: none !important; }
+
+body[data-path="login"] {
+  background: #F5EDD8 !important;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
+body[data-path="login"]::before {
+  content: '';
+  display: block;
+  width: 420px;
+  min-height: 100vh;
+  background: #2B1A0A;
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  background-image: url('/assets/the_chicken_farm/images/tcf_logo_circle.svg');
+  background-repeat: no-repeat;
+  background-position: center 38%;
+  background-size: 180px 180px;
+}
+
+body[data-path="login"] .page-content-wrapper,
+body[data-path="login"] .container {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body[data-path="login"] .page-card-container {
+  width: 100% !important;
+  min-height: 100vh;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+body[data-path="login"] .page-card {
+  width: calc(100vw - 420px) !important;
+  min-height: 100vh;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: #F5EDD8 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 80px !important;
+  margin: 0 !important;
+}
+
+body[data-path="login"] .page-card-head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+body[data-path="login"] .page-card-head img { display: none; }
+
+body[data-path="login"] .page-card-head h1,
+body[data-path="login"] .page-card-head .title-text {
+  font-family: Georgia, serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 400 !important;
+  color: #2B1A0A !important;
+  letter-spacing: 0.5px;
+}
+
+body[data-path="login"] .page-card-head h1::before {
+  content: 'Accedi al tuo account';
+  display: block;
+  font-size: 0.75rem;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #CC2200;
+  margin-bottom: 6px;
+}
+
+body[data-path="login"] .login-content { width: 100%; max-width: 380px; }
+
+body[data-path="login"] .form-control,
+body[data-path="login"] input[type="text"],
+body[data-path="login"] input[type="email"],
+body[data-path="login"] input[type="password"] {
+  background: white !important;
+  border: 1.5px solid #d4c4a8 !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  font-size: 0.95rem !important;
+  color: #2B1A0A !important;
+  box-shadow: none !important;
+}
+
+body[data-path="login"] .form-control:focus,
+body[data-path="login"] input:focus {
+  border-color: #2B1A0A !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(43,26,10,0.1) !important;
+}
+
+body[data-path="login"] .btn-primary,
+body[data-path="login"] button[type="submit"],
+body[data-path="login"] [data-label="Login"] {
+  background: #CC2200 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 13px 0 !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  width: 100% !important;
+  color: white !important;
+  box-shadow: none !important;
+  margin-top: 8px !important;
+}
+
+body[data-path="login"] .btn-primary:hover { background: #a81b00 !important; }
+
+body[data-path="login"] .btn-default,
+body[data-path="login"] .btn-secondary {
+  background: white !important;
+  border: 1.5px solid #d4c4a8 !important;
+  border-radius: 8px !important;
+  color: #2B1A0A !important;
+  font-size: 0.9rem !important;
+  width: 100% !important;
+}
+
+body[data-path="login"] a { color: #CC2200 !important; }
+body[data-path="login"] .text-muted { color: #8a7060 !important; }
+
+body[data-path="login"] .login-divider,
+body[data-path="login"] .divider { color: #8a7060 !important; }
+
+body[data-path="login"] .input-group-text {
+  background: white !important;
+  border: 1.5px solid #d4c4a8 !important;
+  border-right: none !important;
+  color: #8a7060 !important;
+}
+
+@media (max-width: 768px) {
+  body[data-path="login"]::before { display: none; }
+  body[data-path="login"] .page-card {
+    width: 100% !important;
+    padding: 48px 24px !important;
+  }
+}
+
