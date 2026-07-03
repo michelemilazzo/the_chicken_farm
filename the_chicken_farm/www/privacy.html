@@ -1,130 +1,26 @@
 {% extends "templates/web.html" %}
 
-{% block title %}Informativa sulla privacy · The Chicken Farm{% endblock %}
+{% block title %}Privacy Policy · The Chicken Farm{% endblock %}
 
 {% block head_include %}
-<meta name="description" content="Informativa sul trattamento dei dati personali di The Chicken Farm (BMAS S.r.l.) ai sensi del Reg. UE 2016/679 (GDPR): dati di account, ordini, pagamenti, spedizioni e cookie.">
+<meta name="description" content="Informativa sul trattamento dei dati personali di The Chicken Farm (BMAS S.r.l.) ai sensi del GDPR: account, ordini, pagamenti, spedizioni e cookie.">
 {% endblock %}
 
 {% block page_content %}
-<div class="tcf-legal-page">
+{% from "mmos_brand/templates/includes/legal.html" import privacy_policy_shop %}
+<div class="tcf-legal-theme">
   <style>
-    .tcf-legal-page { background:#070707; min-height:100vh; color:#f6efe4; }
-    .tcf-legal-wrap { max-width:900px; margin:0 auto; padding:64px 20px 96px; }
-    .tcf-legal-wrap .eyebrow { display:inline-block; padding:6px 14px; border-radius:999px; background:rgba(200,155,60,.14); color:#c89b3c; font-size:.68rem; text-transform:uppercase; letter-spacing:1.6px; font-weight:800; margin-bottom:18px; }
-    .tcf-legal-wrap h1 { font-family:Oswald,Impact,sans-serif; font-size:clamp(2.2rem,6vw,3.8rem); line-height:.95; text-transform:uppercase; letter-spacing:2px; margin:0 0 14px; }
-    .tcf-legal-wrap h1 strong { color:#c89b3c; }
-    .tcf-legal-wrap .updated { color:#8f887d; font-size:.85rem; margin:0 0 40px; }
-    .tcf-legal-wrap h2 { font-family:Oswald,Impact,sans-serif; text-transform:uppercase; letter-spacing:1.4px; font-size:1.35rem; color:#f6efe4; margin:44px 0 14px; padding-top:22px; border-top:1px solid rgba(200,155,60,.14); }
-    .tcf-legal-wrap h3 { font-size:1.02rem; color:#c89b3c; margin:24px 0 8px; }
-    .tcf-legal-wrap p, .tcf-legal-wrap li { color:#c3bcb1; line-height:1.85; font-size:.98rem; }
-    .tcf-legal-wrap ul { padding-left:22px; margin:10px 0 18px; }
-    .tcf-legal-wrap li { margin-bottom:8px; }
-    .tcf-legal-wrap a { color:#c89b3c; text-decoration:underline; }
-    .tcf-legal-wrap strong { color:#f6efe4; }
-    .tcf-idbox { background:linear-gradient(180deg,rgba(20,20,20,.98),rgba(12,12,12,.98)); border:1px solid rgba(200,155,60,.16); border-radius:18px; padding:24px 26px; margin:8px 0 22px; }
-    .tcf-idbox p { margin:4px 0; }
-    .tcf-legal-table { width:100%; border-collapse:collapse; margin:12px 0 22px; font-size:.92rem; }
-    .tcf-legal-table th, .tcf-legal-table td { text-align:left; padding:12px 14px; border:1px solid rgba(200,155,60,.14); vertical-align:top; color:#c3bcb1; }
-    .tcf-legal-table th { background:rgba(200,155,60,.10); color:#f6efe4; text-transform:uppercase; letter-spacing:1px; font-size:.72rem; }
-    .tcf-legal-toc { background:rgba(16,16,16,.9); border:1px solid rgba(200,155,60,.12); border-radius:16px; padding:20px 24px; margin:0 0 34px; }
-    .tcf-legal-toc strong { display:block; text-transform:uppercase; letter-spacing:1.4px; font-size:.72rem; color:#c89b3c; margin-bottom:10px; }
-    .tcf-legal-toc ol { margin:0; padding-left:20px; columns:2; }
-    @media (max-width:640px){ .tcf-legal-toc ol{ columns:1; } .tcf-legal-table, .tcf-legal-table thead, .tcf-legal-table tbody, .tcf-legal-table th, .tcf-legal-table td, .tcf-legal-table tr{ display:block; } .tcf-legal-table th{ display:none; } .tcf-legal-table td{ border-top:none; } .tcf-legal-table tr{ margin-bottom:14px; border:1px solid rgba(200,155,60,.14); border-radius:12px; overflow:hidden; } }
+    /* Override dark BK-style della .mmos-legal centralizzata, per coerenza col sito TCF */
+    .tcf-legal-theme { background:#070707; min-height:100vh; }
+    .tcf-legal-theme .mmos-legal { color:#c3bcb1; font-family:Nunito,-apple-system,sans-serif; }
+    .tcf-legal-theme .mmos-legal-kicker { color:#c89b3c; }
+    .tcf-legal-theme .mmos-legal h1 { color:#f6efe4; font-family:Oswald,Impact,sans-serif; text-transform:uppercase; letter-spacing:2px; }
+    .tcf-legal-theme .mmos-legal-meta { color:#8f887d; border-bottom-color:rgba(200,155,60,.18); }
+    .tcf-legal-theme .mmos-legal h2 { color:#f6efe4; font-family:Oswald,Impact,sans-serif; text-transform:uppercase; letter-spacing:1.2px; border-top:1px solid rgba(200,155,60,.14); padding-top:20px; }
+    .tcf-legal-theme .mmos-legal strong { color:#f6efe4; }
+    .tcf-legal-theme .mmos-legal a { color:#c89b3c; }
+    .tcf-legal-theme .mmos-legal-back { color:#f6efe4; }
   </style>
-
-  <div class="tcf-legal-wrap">
-    <span class="eyebrow">Documenti legali</span>
-    <h1>Informativa sulla <strong>privacy</strong></h1>
-    <p class="updated">Ultimo aggiornamento: {{ last_update }}</p>
-
-    <div class="tcf-legal-toc">
-      <strong>Indice</strong>
-      <ol>
-        <li><a href="#titolare">Titolare del trattamento</a></li>
-        <li><a href="#dati">Dati che raccogliamo</a></li>
-        <li><a href="#finalita">Finalità e basi giuridiche</a></li>
-        <li><a href="#pagamenti">Pagamenti</a></li>
-        <li><a href="#spedizioni">Spedizioni e consegne</a></li>
-        <li><a href="#destinatari">Destinatari dei dati</a></li>
-        <li><a href="#conservazione">Conservazione</a></li>
-        <li><a href="#diritti">I tuoi diritti</a></li>
-        <li><a href="#cookie">Cookie</a></li>
-        <li><a href="#modifiche">Modifiche</a></li>
-      </ol>
-    </div>
-
-    <p>La presente informativa descrive come <strong>{{ company.name }}</strong> ("Titolare", "noi") tratta i dati personali degli utenti del sito <strong>{{ company.site }}</strong> e del relativo negozio online ("Sito"), ai sensi del Regolamento (UE) 2016/679 ("GDPR") e del D.Lgs. 196/2003 come modificato dal D.Lgs. 101/2018 ("Codice Privacy").</p>
-
-    <h2 id="titolare">1. Titolare del trattamento</h2>
-    <div class="tcf-idbox">
-      <p><strong>{{ company.name }}</strong></p>
-      <p>Sede legale: {{ company.address }}</p>
-      <p>P.IVA / C.F.: {{ company.vat }}</p>
-      <p>Email: <a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
-    </div>
-    <p>Per qualsiasi richiesta relativa al trattamento dei dati e all'esercizio dei tuoi diritti puoi scriverci all'indirizzo email sopra indicato.</p>
-
-    <h2 id="dati">2. Dati che raccogliamo</h2>
-    <p>In relazione all'uso del Sito e all'acquisto di prodotti nel negozio online trattiamo le seguenti categorie di dati:</p>
-    <ul>
-      <li><strong>Dati di account</strong>: nome, cognome, indirizzo email, password (conservata in forma cifrata), preferenze dell'account.</li>
-      <li><strong>Dati di ordine</strong>: prodotti acquistati, quantità, importi, storico ordini, eventuali note d'ordine.</li>
-      <li><strong>Dati di fatturazione e spedizione</strong>: indirizzo di consegna e di fatturazione, numero di telefono, eventuali dati fiscali necessari all'emissione del documento di vendita.</li>
-      <li><strong>Dati di pagamento</strong>: i dati necessari a completare la transazione sono gestiti direttamente dai fornitori di servizi di pagamento (vedi §4). Il Titolare <strong>non conserva i dati completi della carta</strong>.</li>
-      <li><strong>Dati di contatto</strong>: informazioni fornite tramite moduli di contatto, richieste di assistenza o prenotazione.</li>
-      <li><strong>Dati tecnici e di navigazione</strong>: indirizzo IP, tipo di dispositivo e browser, cookie di sessione e di carrello, log di sicurezza (vedi §9 e la <a href="/cookie">Cookie policy</a>).</li>
-    </ul>
-
-    <h2 id="finalita">3. Finalità e basi giuridiche del trattamento</h2>
-    <table class="tcf-legal-table">
-      <thead><tr><th>Finalità</th><th>Base giuridica (art. 6 GDPR)</th></tr></thead>
-      <tbody>
-        <tr><td>Registrazione e gestione dell'account cliente</td><td>Esecuzione di un contratto / misure precontrattuali (art. 6.1.b)</td></tr>
-        <tr><td>Gestione degli ordini, dei pagamenti, delle spedizioni e dei resi</td><td>Esecuzione del contratto di vendita (art. 6.1.b)</td></tr>
-        <tr><td>Adempimenti fiscali, contabili e di legge</td><td>Obbligo legale (art. 6.1.c)</td></tr>
-        <tr><td>Assistenza clienti e risposta alle richieste</td><td>Esecuzione del contratto / legittimo interesse (art. 6.1.b/f)</td></tr>
-        <tr><td>Sicurezza del Sito e prevenzione delle frodi</td><td>Legittimo interesse (art. 6.1.f)</td></tr>
-        <tr><td>Cookie tecnici necessari al funzionamento del negozio</td><td>Legittimo interesse / esecuzione del contratto (art. 6.1.b/f)</td></tr>
-        <tr><td>Cookie analitici e comunicazioni marketing</td><td>Consenso dell'interessato (art. 6.1.a)</td></tr>
-      </tbody>
-    </table>
-    <p>Il conferimento dei dati contrassegnati come obbligatori è necessario per la registrazione, l'acquisto e l'adempimento degli obblighi di legge: il rifiuto rende impossibile completare l'ordine.</p>
-
-    <h2 id="pagamenti">4. Pagamenti</h2>
-    <p>I pagamenti online sono elaborati da <strong>fornitori terzi di servizi di pagamento (payment gateway)</strong> specializzati e conformi allo standard PCI-DSS. Tali fornitori operano quali autonomi titolari o responsabili del trattamento per i dati necessari a eseguire e proteggere la transazione. I dati completi della carta o dello strumento di pagamento sono trasmessi in forma cifrata direttamente al fornitore e <strong>non sono conservati sui nostri sistemi</strong>. Riceviamo dal fornitore esclusivamente l'esito della transazione e i dati minimi necessari alla gestione dell'ordine, della fatturazione e di eventuali rimborsi.</p>
-
-    <h2 id="spedizioni">5. Spedizioni e consegne</h2>
-    <p>Per consegnare i prodotti acquistati comunichiamo i dati necessari (nominativo, indirizzo, contatto telefonico) ai corrieri e agli operatori logistici incaricati, che li trattano quali autonomi titolari o responsabili al solo fine della consegna.</p>
-
-    <h2 id="destinatari">6. Destinatari dei dati</h2>
-    <p>I dati possono essere comunicati a:</p>
-    <ul>
-      <li>fornitori di servizi di pagamento;</li>
-      <li>corrieri e operatori logistici;</li>
-      <li>fornitori di servizi IT, hosting e manutenzione del Sito, nominati responsabili del trattamento ex art. 28 GDPR;</li>
-      <li>consulenti fiscali, contabili e legali;</li>
-      <li>autorità pubbliche, quando richiesto dalla legge.</li>
-    </ul>
-    <p>I dati non sono oggetto di diffusione. Eventuali trasferimenti verso Paesi terzi avvengono solo in presenza di adeguate garanzie ai sensi degli artt. 44 e ss. GDPR (es. decisioni di adeguatezza o clausole contrattuali standard).</p>
-
-    <h2 id="conservazione">7. Periodo di conservazione</h2>
-    <ul>
-      <li>Dati dell'account: per tutta la durata del rapporto e fino alla richiesta di cancellazione.</li>
-      <li>Dati di ordine, fatturazione e contabili: <strong>10 anni</strong>, come previsto dalla normativa civilistica e fiscale.</li>
-      <li>Dati di contatto/assistenza: per il tempo necessario a evadere la richiesta.</li>
-      <li>Log tecnici e di sicurezza: per un periodo limitato e proporzionato alle finalità.</li>
-    </ul>
-
-    <h2 id="diritti">8. I tuoi diritti</h2>
-    <p>Ai sensi degli artt. 15-22 GDPR hai diritto di ottenere l'accesso, la rettifica, la cancellazione, la limitazione e la portabilità dei tuoi dati, di opporti al trattamento e di revocare in qualsiasi momento il consenso prestato (senza pregiudizio per i trattamenti già effettuati). Puoi esercitare tali diritti scrivendo a <a href="mailto:{{ company.email }}">{{ company.email }}</a>.</p>
-    <p>Hai inoltre diritto di proporre reclamo all'autorità di controllo competente, il <strong>Garante per la protezione dei dati personali</strong> (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>).</p>
-
-    <h2 id="cookie">9. Cookie</h2>
-    <p>Il Sito utilizza cookie tecnici necessari (sessione, autenticazione, carrello) e, previo consenso, cookie analitici. Per il dettaglio completo e per gestire le tue preferenze consulta la <a href="/cookie">Cookie policy</a>, redatta anche ai sensi dell'art. 122 del Codice Privacy e delle Linee guida del Garante sui cookie.</p>
-
-    <h2 id="modifiche">10. Modifiche all'informativa</h2>
-    <p>Il Titolare può aggiornare la presente informativa. La versione in vigore è sempre pubblicata su questa pagina con l'indicazione della data di ultimo aggiornamento.</p>
-  </div>
+  {{ privacy_policy_shop(company, anno) }}
 </div>
 {% endblock %}

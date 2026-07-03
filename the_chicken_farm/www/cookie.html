@@ -1,67 +1,26 @@
 {% extends "templates/web.html" %}
 
-{% block title %}Cookie policy · The Chicken Farm{% endblock %}
+{% block title %}Cookie Policy · The Chicken Farm{% endblock %}
 
 {% block head_include %}
-<meta name="description" content="Cookie policy di The Chicken Farm (BMAS S.r.l.): tipologie di cookie usati dal negozio online, finalità, durata e gestione delle preferenze ai sensi dell'art. 122 del Codice Privacy.">
+<meta name="description" content="Cookie policy di The Chicken Farm (BMAS S.r.l.): cookie tecnici e di carrello del negozio online, cookie analitici previo consenso, ai sensi dell'art. 122 del Codice Privacy.">
 {% endblock %}
 
 {% block page_content %}
-<div class="tcf-legal-page">
+{% from "mmos_brand/templates/includes/legal.html" import cookie_policy_shop %}
+<div class="tcf-legal-theme">
   <style>
-    .tcf-legal-page { background:#070707; min-height:100vh; color:#f6efe4; }
-    .tcf-legal-wrap { max-width:900px; margin:0 auto; padding:64px 20px 96px; }
-    .tcf-legal-wrap .eyebrow { display:inline-block; padding:6px 14px; border-radius:999px; background:rgba(200,155,60,.14); color:#c89b3c; font-size:.68rem; text-transform:uppercase; letter-spacing:1.6px; font-weight:800; margin-bottom:18px; }
-    .tcf-legal-wrap h1 { font-family:Oswald,Impact,sans-serif; font-size:clamp(2.2rem,6vw,3.8rem); line-height:.95; text-transform:uppercase; letter-spacing:2px; margin:0 0 14px; }
-    .tcf-legal-wrap h1 strong { color:#c89b3c; }
-    .tcf-legal-wrap .updated { color:#8f887d; font-size:.85rem; margin:0 0 40px; }
-    .tcf-legal-wrap h2 { font-family:Oswald,Impact,sans-serif; text-transform:uppercase; letter-spacing:1.4px; font-size:1.35rem; color:#f6efe4; margin:44px 0 14px; padding-top:22px; border-top:1px solid rgba(200,155,60,.14); }
-    .tcf-legal-wrap p, .tcf-legal-wrap li { color:#c3bcb1; line-height:1.85; font-size:.98rem; }
-    .tcf-legal-wrap ul { padding-left:22px; margin:10px 0 18px; }
-    .tcf-legal-wrap li { margin-bottom:8px; }
-    .tcf-legal-wrap a { color:#c89b3c; text-decoration:underline; }
-    .tcf-legal-wrap strong { color:#f6efe4; }
-    .tcf-legal-table { width:100%; border-collapse:collapse; margin:12px 0 22px; font-size:.9rem; }
-    .tcf-legal-table th, .tcf-legal-table td { text-align:left; padding:12px 14px; border:1px solid rgba(200,155,60,.14); vertical-align:top; color:#c3bcb1; }
-    .tcf-legal-table th { background:rgba(200,155,60,.10); color:#f6efe4; text-transform:uppercase; letter-spacing:1px; font-size:.72rem; }
-    .tcf-cookie-btn { display:inline-flex; align-items:center; gap:8px; margin:6px 0 8px; padding:13px 22px; border-radius:999px; background:#c89b3c; color:#111; font-weight:800; text-transform:uppercase; letter-spacing:1.2px; font-size:.76rem; border:none; cursor:pointer; text-decoration:none; }
-    .tcf-cookie-btn:hover { filter:brightness(1.06); }
-    @media (max-width:640px){ .tcf-legal-table, .tcf-legal-table thead, .tcf-legal-table tbody, .tcf-legal-table th, .tcf-legal-table td, .tcf-legal-table tr{ display:block; } .tcf-legal-table th{ display:none; } .tcf-legal-table td{ border-top:none; } .tcf-legal-table td:before{ content:attr(data-l); display:block; text-transform:uppercase; letter-spacing:1px; font-size:.66rem; color:#c89b3c; margin-bottom:2px; } .tcf-legal-table tr{ margin-bottom:14px; border:1px solid rgba(200,155,60,.14); border-radius:12px; overflow:hidden; } }
+    /* Override dark BK-style della .mmos-legal centralizzata, per coerenza col sito TCF */
+    .tcf-legal-theme { background:#070707; min-height:100vh; }
+    .tcf-legal-theme .mmos-legal { color:#c3bcb1; font-family:Nunito,-apple-system,sans-serif; }
+    .tcf-legal-theme .mmos-legal-kicker { color:#c89b3c; }
+    .tcf-legal-theme .mmos-legal h1 { color:#f6efe4; font-family:Oswald,Impact,sans-serif; text-transform:uppercase; letter-spacing:2px; }
+    .tcf-legal-theme .mmos-legal-meta { color:#8f887d; border-bottom-color:rgba(200,155,60,.18); }
+    .tcf-legal-theme .mmos-legal h2 { color:#f6efe4; font-family:Oswald,Impact,sans-serif; text-transform:uppercase; letter-spacing:1.2px; border-top:1px solid rgba(200,155,60,.14); padding-top:20px; }
+    .tcf-legal-theme .mmos-legal strong { color:#f6efe4; }
+    .tcf-legal-theme .mmos-legal a { color:#c89b3c; }
+    .tcf-legal-theme .mmos-legal-back { color:#f6efe4; }
   </style>
-
-  <div class="tcf-legal-wrap">
-    <span class="eyebrow">Documenti legali</span>
-    <h1>Cookie <strong>policy</strong></h1>
-    <p class="updated">Ultimo aggiornamento: {{ last_update }}</p>
-
-    <p>La presente Cookie policy illustra come <strong>{{ company.name }}</strong> utilizza i cookie e le tecnologie analoghe sul sito <strong>{{ company.site }}</strong> e sul negozio online, ai sensi dell'art. 122 del D.Lgs. 196/2003 (Codice Privacy), del Reg. (UE) 2016/679 (GDPR) e delle Linee guida del Garante per la protezione dei dati personali sui cookie del 10 giugno 2021.</p>
-
-    <h2>Cosa sono i cookie</h2>
-    <p>I cookie sono piccoli file di testo che i siti visitati inviano al dispositivo dell'utente, dove vengono memorizzati per essere ritrasmessi agli stessi siti alla visita successiva. Possono essere di sessione (cancellati alla chiusura del browser) o persistenti (conservati fino alla scadenza o alla rimozione).</p>
-
-    <h2>Cookie tecnici (necessari)</h2>
-    <p>Indispensabili per il funzionamento del Sito e del negozio online: autenticazione, mantenimento della sessione e del carrello, sicurezza. Non richiedono consenso e non possono essere disattivati.</p>
-    <table class="tcf-legal-table">
-      <thead><tr><th>Cookie</th><th>Finalità</th><th>Durata</th></tr></thead>
-      <tbody>
-        <tr><td data-l="Cookie">sid</td><td data-l="Finalità">Sessione utente e autenticazione</td><td data-l="Durata">Sessione</td></tr>
-        <tr><td data-l="Cookie">system_user / user_id / full_name</td><td data-l="Finalità">Identificazione dell'utente autenticato</td><td data-l="Durata">Sessione</td></tr>
-        <tr><td data-l="Cookie">csrf_token</td><td data-l="Finalità">Protezione da attacchi CSRF</td><td data-l="Durata">Sessione</td></tr>
-        <tr><td data-l="Cookie">carrello / webshop</td><td data-l="Finalità">Memorizzazione dei prodotti nel carrello</td><td data-l="Durata">Sessione</td></tr>
-        <tr><td data-l="Cookie">tcf-cookie-consent</td><td data-l="Finalità">Memorizza la scelta sui cookie</td><td data-l="Durata">6 mesi</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Cookie analitici e di terze parti</h2>
-    <p>Possono essere installati, <strong>solo previo consenso</strong>, cookie analitici per comprendere l'uso del Sito in forma aggregata, nonché eventuali cookie di terze parti collegati a servizi integrati (es. fornitori di pagamento, mappe, contenuti multimediali). In assenza di consenso questi cookie non vengono installati. L'elenco viene aggiornato al momento dell'attivazione dei relativi servizi.</p>
-
-    <h2>Gestione delle preferenze</h2>
-    <p>Al primo accesso viene mostrato un banner che consente di accettare o rifiutare i cookie non necessari. Puoi modificare la tua scelta in qualsiasi momento:</p>
-    <button type="button" class="tcf-cookie-btn" onclick="if(window.tcfOpenCookie){window.tcfOpenCookie()}else{try{localStorage.removeItem('tcf-cookie-consent')}catch(e){}location.reload()}">Gestisci le preferenze cookie</button>
-    <p>Puoi inoltre gestire o eliminare i cookie tramite le impostazioni del tuo browser. La disattivazione dei cookie tecnici può compromettere il corretto funzionamento del negozio online.</p>
-
-    <h2>Titolare e contatti</h2>
-    <p>Titolare del trattamento è <strong>{{ company.name }}</strong>, {{ company.address }} — P.IVA {{ company.vat }}. Per informazioni: <a href="mailto:{{ company.email }}">{{ company.email }}</a>. Per il trattamento dei dati personali consulta l'<a href="/privacy">Informativa sulla privacy</a>.</p>
-  </div>
+  {{ cookie_policy_shop(company, anno) }}
 </div>
 {% endblock %}

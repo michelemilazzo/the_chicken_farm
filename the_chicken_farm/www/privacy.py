@@ -1,8 +1,8 @@
-from the_chicken_farm.www.legal_data import COMPANY, LAST_UPDATE
+from the_chicken_farm.www.legal_data import COMPANY, ANNO
 
 
 def get_context(context):
     context.no_cache = 1
-    context.title = "Informativa sulla privacy"
+    context.title = "Privacy Policy"
     context.company = COMPANY
-    context.last_update = LAST_UPDATE
+    context.anno = ANNO

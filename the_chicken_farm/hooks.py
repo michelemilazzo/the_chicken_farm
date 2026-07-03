@@ -11,7 +11,7 @@ required_apps = ["frappe", "erpnext", "webshop"]
 home_page = "home"
 
 web_include_css = "/assets/the_chicken_farm/css/tcf_theme.css?v=202606141510"
-web_include_js = "/assets/the_chicken_farm/js/tcf_main.js?v=202607031230"
+web_include_js = "/assets/the_chicken_farm/js/tcf_main.js?v=202607031300"
 
 website_redirects = [
     {"source": "/franchising", "target": "/franchise"},

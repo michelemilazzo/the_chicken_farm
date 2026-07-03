@@ -1,18 +1,21 @@
-"""Dati societari e di contatto usati dalle pagine legali (privacy, cookie).
+"""Dati societari per le pagine legali (macro GDPR centralizzato in mmos_brand).
+
+Campi allineati alla signature dei macro mmos_brand
+(privacy_policy_shop / cookie_policy_shop): ragione_sociale, sede_legale,
+piva_cf, rea, email, pec.
 
 Fonte: DocType Company "BMAS S.r.l." + documenti ufficiali (Statuto, Visura
-Ordinaria) del sito. La P.IVA 13600510963 compare sui documenti ufficiali
-(Statuto, VISUORD, registrazione A01) ed e' quella usata nel footer del sito.
+Ordinaria). La P.IVA 13600510963 compare sui documenti ufficiali ed e' quella
+usata nel footer del sito (il DocType Company ha un valore trasposto errato).
 """
 
 COMPANY = {
-    "name": "BMAS S.r.l.",
-    "address": "Borgo Giannotti 435, 55100 Lucca (LU)",
-    "vat": "13600510963",
+    "ragione_sociale": "BMAS S.r.l.",
+    "sede_legale": "Borgo Giannotti 435, 55100 Lucca (LU)",
+    "piva_cf": "13600510963",
+    "rea": None,
     "email": "info@thechickenfarm.it",
-    "phone": "+39 0583 000000",
-    "site": "thechickenfarm.it",
-    "brand": "The Chicken Farm",
+    "pec": None,
 }
 
-LAST_UPDATE = "3 luglio 2026"
+ANNO = "3 luglio 2026"
